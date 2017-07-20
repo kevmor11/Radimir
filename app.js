@@ -19,18 +19,12 @@ var connection = mysql.createConnection({
   database : 'radimir'
 });
 
-// connection.query('SELECT username, password FROM admins WHERE id = 1', function(err, rows, fields) {
-//     if (err) throw err;
-
-//     var username = rows[0].username;
-//     var password = rows[0].password;
-// });
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
+// TODO get Rad to design a Favicon
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
