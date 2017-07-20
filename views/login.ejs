@@ -4,9 +4,14 @@
     <% include ../partials/head %>
   </head>
   <body>
+    <div id="navbar">
+      <ul>
+      <li><a href="/">home</a></li>
+      </ul>
+    </div>
 
     <div class="wrapper">
-      <form class="form-signin">
+      <form class="form-signin" action="/login" method="post">
       <h2 class="form-signin-heading" style="margin-left: 2.4em; margin-bottom: .6em;">login boiiiiii</h2>
       <input type="text" class="form-control" name="username" placeholder="username" required="" autofocus="" /><br />
       <input type="password" class="form-control" name="password" placeholder="password" required=""/>

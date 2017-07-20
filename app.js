@@ -8,6 +8,7 @@ var mysql = require('mysql');
 var auth = require('basic-auth-connect');
 var cookieSession = require("cookie-session");
 var gm = require('gm').subClass({imageMagick: true});
+var bcrypt = require('bcrypt');
 
 var app = express();
 
@@ -55,34 +56,39 @@ app.get("/login", (req, res) => {
   }
 });
 
-// app.post("/login", (req, res) => {
+app.post("/login", (req, res) => {
 
-//   var queryUsername = '';
-//   var queryPassword = '';
+  var queryUsername = '';
+  var queryPassword = '';
 
-//   connection.query('SELECT username, password FROM admins WHERE id = 1', function(err, rows, fields) {
-//     if (err) throw err;
+  var query = connection.query('SELECT username, password FROM admins WHERE id = 1', function(err, rows, fields) {
+    if (err) throw err;
 
-//     queryUsername = rows[0].username;
-//     queryPassword = rows[0].password;
-//   });
+    queryUsername = rows[0].username;
+    queryPassword = rows[0].password;
 
-//   function authenticated(username, password) {
-//     if (queryUsername === username && bcrypt.compareSync(password, queryPassword, 10)) {
-//       return;
-//     // Break up the if statement into multiple if statements to be able to respond with relevant messages depending on if the email or password does not match
-//     }
-//   }
+    function authenticated(username, password) {
+      if (queryUsername === username && bcrypt.compareSync(password, queryPassword, 10)) {
+        return true;
+      // Break up the if statement into multiple if statements to be able to respond with relevant messages depending on if the email or password does not match
+      }
+    }
 
-//   const authenticatedUser = authenticated(req.body.username, req.body.password)
+    const authenticatedUser = authenticated(req.body.username, req.body.password);
 
-//   if (authenticatedUser) {
-//     req.session["user_id"] = (authenticatedUser.id)
-//     res.redirect("/upload");
-//   } else {
-//     res.status(403).send("Woops, try again.<br><a href='/register'>Sign Up</a><br><a href='/login'>Login</a>")
-//   }
-// });
+    if (authenticatedUser) {
+      console.log("SUCCESS");
+      // TODO set cookie-session properly
+      // TODO create logout button that destroys session cookie and redirects to Login
+      req.session["user_id"] = (authenticatedUser.id);
+      res.redirect("/upload");
+    } else {
+      console.log("FAIL");
+      res.status(403).send("Woops, try again.<br><a href='/login'>Login</a>");
+    }
+  });
+
+});
 
 app.get('/upload', function(req, res, next) {
   // if (req.session.user_id) {
