@@ -1,20 +1,110 @@
+.form-title {
+  text-align: center;
+}
+
+#navbar {
+  background-color: whitesmoke;
+  margin: 0 auto;
+  margin-top: 1em;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  width: 50em;
+}
+
 #navbar ul {
   margin: 0;
   padding: 5px;
   list-style-type: none;
   text-align: center;
+  font-size: 1.5em;
 }
 
 #navbar ul li {
   display: inline;
 }
 
- #navbar ul li a {
+#navbar ul li a {
   text-decoration: none;
   padding: .2em 1em;
   color: black;
 }
 
  #navbar ul li a:hover {
+  color: #2f6fd6;
+}
+
+.upload-form {
+  width: 50em;
+  margin: 0 auto;
+  margin-top: 5em;
+  background: whitesmoke;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  padding: 30px;
+  -moz-box-shadow:    3px 3px 3px 3px rgba(211,211,211,.3);
+  -webkit-box-shadow: 3px 3px 3px 3px rgba(211,211,211,.3);
+  box-shadow:         3px 3px 3px 3px rgba(211,211,211,.3);
+}
+
+#input-description {
+  height: 8em;
+  resize: none;
+}
+
+@import "bourbon";
+
+body {
+	background: #eee !important;
+}
+
+.wrapper {
+	margin-top: 80px;
+  margin-bottom: 80px;
+  width: 35em;
+  margin: 0 auto;
+  margin-top: 5em;
+  background: white;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  padding: 30px;
+}
+
+.form-signin {
+  max-width: 380px;
+  padding: 15px 35px 45px;
+  margin: 0 auto;
   background-color: #fff;
+
+  .form-signin-heading,
+	.checkbox {
+    margin-bottom: 30px;
+	}
+
+	.checkbox {
+	  font-weight: normal;
+	}
+
+	.form-control {
+	  position: relative;
+	  font-size: 16px;
+	  height: auto;
+	  padding: 10px;
+		@include box-sizing(border-box);
+
+		&:focus {
+		  z-index: 2;
+		}
+	}
+
+	input[type="text"] {
+	  margin-bottom: -1px;
+	  border-bottom-left-radius: 0;
+	  border-bottom-right-radius: 0;
+	}
+
+	input[type="password"] {
+	  margin-bottom: 20px;
+	  border-top-left-radius: 0;
+	  border-top-right-radius: 0;
+	}
 }
