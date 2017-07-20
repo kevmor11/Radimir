@@ -13,21 +13,21 @@
     <!-- Navbar -->
     <div id="navbar">
       <ul>
-      <li><a href="/">Home</a></li>
+      <li><a href="/">home</a></li>
       <div style="display: inline;">|</div>
-      <li><a href="/new-album">New Album</a></li>
+      <li><a href="/new-album">new album</a></li>
       <div style="display: inline;">|</div>
-      <li><a href="/upload">Upload Images</a></li>
+      <li><a href="/upload">upload images</a></li>
       </ul>
     </div>
 
     <div class="upload-form">
       <form action="" method="post" enctype="multipart/form-data">
-        <h4 class="form-title">Upload an Image to An Album</h4>
+        <h3 class="form-title">upload an image to an album</h3>
 
         <div class="form-group">
-          <label for="image">Image:</label>
-          <input class="form-control" type="file" name="image" id="image" />
+          <label for="image">image:</label>
+          <input class="form-control" type="file" name="image" id="image" required />
         </div>
         <div class="form-group">
           <label for="title">Album:</label>
@@ -39,14 +39,14 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="title">Title:</label>
-          <input class="form-control" type="text" name="title" class="" />
+          <label for="title">title:</label>
+          <input class="form-control" type="text" name="title" class="" required />
         </div>
         <div class="form-group">
-          <label for="description">Description:</label>
+          <label for="description">description:</label>
           <textarea class="form-control" id="input-description" name="description"></textarea><br />
         </div>
-        <button class="btn btn-primary" type="submit" value="Submit">Upload</button>
+        <button class="btn btn-primary" type="submit" style="width: 10em; margin-left: 18em" value="Submit">upload</button>
       </form>
     </div>
   </body>

@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var auth = require('basic-auth-connect');
 var cookieSession = require("cookie-session");
+var gm = require('gm').subClass({imageMagick: true});
 
 var app = express();
 

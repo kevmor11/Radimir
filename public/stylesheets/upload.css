@@ -3,11 +3,13 @@
 }
 
 #navbar {
-  background-color: whitesmoke;
+  background-color: #bbecf9;
   margin: 0 auto;
-  margin-top: 1em;
-  border: 1px solid lightgrey;
-  border-radius: 5px;
+  /* margin-top: 1em; */
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+  border-radius: 0 0 5px 5px;
   width: 50em;
 }
 
