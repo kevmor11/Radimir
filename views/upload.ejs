@@ -1,25 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Upload</title>
-    <link rel='stylesheet' href='/stylesheets/upload.css' />
-    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
-    <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
-    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css" />
-    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.css" />
+    <% include ../partials/head %>
   </head>
   <body>
 
-    <!-- Navbar -->
-    <div id="navbar">
-      <ul>
-      <li><a href="/">home</a></li>
-      <div style="display: inline;">|</div>
-      <li><a href="/new-album">new album</a></li>
-      <div style="display: inline;">|</div>
-      <li><a href="/upload">upload images</a></li>
-      </ul>
-    </div>
+  <!-- Navbar -->
+  <% include ../partials/navbar %>
+
 
     <div class="upload-form">
       <form action="" method="post" enctype="multipart/form-data">

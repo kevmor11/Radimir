@@ -92,6 +92,28 @@ app.get('/upload', function(req, res, next) {
   // }
 });
 
+// found this code and the app.get below at https://stackoverflow.com/questions/15772394/how-to-upload-display-and-save-images-using-node-js-and-express
+app.post('/upload', function (req, res) {
+    var tempPath = req.files.file.path,
+        targetPath = path.resolve('./uploads/image.png');
+    if (path.extname(req.files.file.name).toLowerCase() === '.png') {
+        fs.rename(tempPath, targetPath, function(err) {
+            if (err) throw err;
+            console.log("Upload completed!");
+        });
+    } else {
+        fs.unlink(tempPath, function () {
+            if (err) throw err;
+            console.error("Only .png files are allowed!");
+        });
+    }
+    // ...
+});
+
+// app.get('/image.png', function (req, res) {
+//     res.sendfile(path.resolve('./uploads/image.png'));
+// });
+
 app.get('/new-album', function(req, res, next) {
   res.render('new-album');
 });
