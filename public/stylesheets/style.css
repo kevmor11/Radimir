@@ -11,7 +11,7 @@ div.album-cover {
   display: inline-block;
   border-radius: 4px;
   border: 1.4px solid grey;
-  padding: 2px;
+  padding: 1.7px;
   padding-bottom: 30px
 }
 
@@ -30,7 +30,7 @@ html, body {
 img.cover-image {
   position: relative;
   float: left;
-  width:  24.46em;
+  width:  24.55em;
   /* height: 100px; */
   background-position: 50% 50%;
   background-repeat:   no-repeat;
