@@ -110,3 +110,13 @@ body {
 	  border-top-right-radius: 0;
 	}
 }
+
+@font-face {
+    font-family: 'AUdimat-Regular';
+    src:url('AUdimat-Regular.ttf.woff') format('woff'),
+        url('AUdimat-Regular.ttf.svg#AUdimat-Regular') format('svg'),
+        url('AUdimat-Regular.ttf.eot'),
+        url('AUdimat-Regular.ttf.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
