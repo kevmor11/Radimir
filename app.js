@@ -16,14 +16,15 @@ var fileUpload = require('express-fileupload');
 var Gallery = require('express-photo-gallery');
 var mkdirp = require('mkdirp');
 var fs = require('fs');
+require('dotenv').config();
 
 var app = express();
 
 var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'radimir'
+  host: process.env.DATABASE_HOST,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME
 });
 
 // view engine setup
