@@ -21,10 +21,11 @@
         <div class="form-group">
           <label for="title">album: *</label>
           <select class="form-control" name="album" required >
-             <!-- For each album, render an <option> tag for the dropdown  -->
             <option disabled selected value> -- select an album -- </option>
-            <option value="Test Album">Test Album</option>
-            <option value="Test Album 2">Test Album 2</option>
+             <!-- For each album, render an <option> tag for the dropdown  -->
+             <% albums.forEach(function(album, i) { %>
+              <option value="<%= album.id %>"><%= album.title %></option>
+            <% }); %>
           </select>
         </div>
         <div class="form-group">

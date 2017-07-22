@@ -95,8 +95,13 @@ app.post("/login", (req, res) => {
 });
 
 app.get('/upload', function (req, res, next) {
+
+  connection.query('SELECT * FROM albums', function (err, rows, fields) {
+    if (err) throw err;
+
+    res.render('upload', { albums: rows });
+  });
   // if (req.session.user_id) {
-  res.render('upload');
   // } else {
   //   res.redirect('/upload');
   // }
@@ -108,25 +113,24 @@ app.post('/upload', function(req, res) {
   const description = req.body.description;
 
   const file = req.files.image;
-  console.log("FILE", req.files);
 
   // Use the mv() method to place the file somewhere on your server
+  // TODO if filename already exists, append a incrementing number onto the end of the filename
   file.mv(`public/uploads/${file.name}`, function(err) {
     if (err) {
-      console.log("ERROR:", err);
+      throw err;
       return res.status(500).send(err);
     }
 
-    // TODO Figure out how to capture album_id foreign key
     // TODO Figure out if I need to link the database row with the file stored locally - assuming I need some correlation?
-    connection.query(`INSERT INTO images (file_name, title, description, cover) VALUES (${mysql.escape(file.name)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0)`,
+    connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(file.name)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
       function (err, result) {
         if (err) throw err;
-        res.redirect('/upload');
+        // res.redirect('/upload');
+        res.redirect('/success');
       }
     );
 
-    // res.send("SUCCESS<br><a href='/upload'>Return to Upload Page</a>");
   });
 });
 
@@ -144,9 +148,13 @@ app.post('/new-album', function (req, res) {
     connection.query(`INSERT INTO albums (title, description) VALUES (${mysql.escape(title)}, ${mysql.escape(description)})`,
       function (err, result) {
         if (err) throw err;
-        res.redirect('/new-album');
+        res.redirect('/success');
       }
     );
+});
+
+app.get('/success', function (req, res, next) {
+  res.render('success');
 });
 
 // catch 404 and forward to error handler
