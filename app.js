@@ -11,6 +11,7 @@ var gm = require('gm').subClass({
   imageMagick: true
 });
 var bcrypt = require('bcrypt');
+const fileUpload = require('express-fileupload');
 
 var app = express();
 
@@ -41,6 +42,7 @@ app.use(cookieSession({
   // Cookie Options (session cookies expire after 24 hours)
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
+app.use(fileUpload());
 
 app.get('/', function (req, res, next) {
   res.render('index', {
@@ -100,22 +102,32 @@ app.get('/upload', function (req, res, next) {
   // }
 });
 
-// found this code and the app.get below at https://stackoverflow.com/questions/15772394/how-to-upload-display-and-save-images-using-node-js-and-express
-app.post('/upload', function (req, res) {
-  var tempPath = req.files.file.path,
-    targetPath = path.resolve('./uploads/image.png');
-  if (path.extname(req.files.file.name).toLowerCase() === '.png') {
-    fs.rename(tempPath, targetPath, function (err) {
-      if (err) throw err;
-      console.log("Upload completed!");
-    });
-  } else {
-    fs.unlink(tempPath, function () {
-      if (err) throw err;
-      console.error("Only .png files are allowed!");
-    });
-  }
-  // ...
+app.post('/upload', function(req, res) {
+  const album = req.body.album;
+  const title = req.body.title;
+  const description = req.body.description;
+
+  const file = req.files.image;
+  console.log("FILE", req.files);
+
+  // Use the mv() method to place the file somewhere on your server
+  file.mv(`public/uploads/${file.name}`, function(err) {
+    if (err) {
+      console.log("ERROR:", err);
+      return res.status(500).send(err);
+    }
+
+    // TODO Figure out how to capture album_id foreign key
+    // TODO Figure out if I need to link the database row with the file stored locally - assuming I need some correlation?
+    connection.query(`INSERT INTO images (file_name, title, description, cover) VALUES (${mysql.escape(file.name)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0)`,
+      function (err, result) {
+        if (err) throw err;
+        res.redirect('/upload');
+      }
+    );
+
+    // res.send("SUCCESS<br><a href='/upload'>Return to Upload Page</a>");
+  });
 });
 
 // app.get('/image.png', function (req, res) {
@@ -146,7 +158,7 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
+  // set local  s, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
