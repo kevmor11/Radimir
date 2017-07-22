@@ -14,6 +14,8 @@ var gm = require('gm').subClass({
 var bcrypt = require('bcrypt');
 var fileUpload = require('express-fileupload');
 var Gallery = require('express-photo-gallery');
+var mkdirp = require('mkdirp');
+var fs = require('fs');
 
 var app = express();
 
@@ -39,17 +41,16 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieSession({
-  name: 'session',
-  keys: ['user_id'],
-  // Cookie Options (session cookies expire after 24 hours)
-  maxAge: 24 * 60 * 60 * 1000 // 24 hours
-}));
+                        name: 'session',
+                        keys: ['user_id'],
+                        // Cookie Options (session cookies expire after 24 hours)
+                        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+                      }));
 app.use(fileUpload());
 
 app.get('/', function (req, res, next) {
   connection.query('SELECT * FROM albums', function (err, rows, fields) {
     if (err) throw err;
-
     res.render('index', { albums: rows });
   });
 });
@@ -99,7 +100,6 @@ app.post("/login", (req, res) => {
 });
 
 app.get('/upload', function (req, res, next) {
-
   connection.query('SELECT * FROM albums', function (err, rows, fields) {
     if (err) throw err;
 
@@ -116,13 +116,20 @@ app.post('/upload', function(req, res) {
   const title = req.body.title;
   const description = req.body.description;
 
-  console.log("ID", req.files.image);
+  console.log("ID", req.body);
 
   const file = req.files.image;
 
+  if (!fs.existsSync(`public/uploads/${album}`)) {
+    mkdirp(`public/uploads/${album}`, function (err) {
+        if (err) console.error(err)
+        else console.log('Directory created successfully!')
+    });
+  }
+
   // Use the mv() method to place the file somewhere on your server
   // TODO if filename already exists, append a incrementing number onto the end of the filename
-  file.mv(`public/uploads/${file.name}`, function(err) {
+  file.mv(`public/uploads/${album}/${file.name}`, function(err) {
     if (err) {
       throw err;
       return res.status(500).send(err);
@@ -132,17 +139,12 @@ app.post('/upload', function(req, res) {
     connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(file.name)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
       function (err, result) {
         if (err) throw err;
-        // res.redirect('/upload');
+
         res.redirect('/success');
       }
     );
-
   });
 });
-
-// app.get('/image.png', function (req, res) {
-//     res.sendfile(path.resolve('./uploads/image.png'));
-// });
 
 app.get('/new-album', function (req, res, next) {
   res.render('new-album');
@@ -175,7 +177,7 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set local  s, only providing error in development
+  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
