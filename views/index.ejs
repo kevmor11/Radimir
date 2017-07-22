@@ -16,44 +16,16 @@
       </div>
     </header>
     <p class="rvd">R V D</p>
+      <!-- TODO render album-covers, titles based on album data  -->
     <div class="container">
-      <!-- TODO render album-covers based on album data  -->
-      <a href="/photos">
-        <div class="album-cover">
-          <img class="cover-image" src="https://mir-s3-cdn-cf.behance.net/projects/202/0883f143124287.Y3JvcCw0NTExLDM1MzAsMCwzMw.jpg" alt="">
-            <!-- <h4 class="title">title</h4>  -->
-        </div>
-      </a>
-      <a href="/photos">
-        <div class="album-cover">
-          <img class="cover-image" src="https://mir-s3-cdn-cf.behance.net/projects/202/0883f143124287.Y3JvcCw0NTExLDM1MzAsMCwzMw.jpg" alt="">
-            <!-- <h4 class="title">title</h4>  -->
-        </div>
-      </a>
-      <a href="/photos">
-        <div class="album-cover">
-          <img class="cover-image" src="https://mir-s3-cdn-cf.behance.net/projects/202/0883f143124287.Y3JvcCw0NTExLDM1MzAsMCwzMw.jpg" alt="">
-            <!-- <h4 class="title">title</h4>  -->
-        </div>
-      </a>
-      <a href="/photos">
-        <div class="album-cover">
-          <img class="cover-image" src="https://mir-s3-cdn-cf.behance.net/projects/202/0883f143124287.Y3JvcCw0NTExLDM1MzAsMCwzMw.jpg" alt="">
-            <!-- <h4 class="title">title</h4>  -->
-        </div>
-      </a>
-      <a href="/photos">
-        <div class="album-cover">
-          <img class="cover-image" src="https://mir-s3-cdn-cf.behance.net/projects/202/0883f143124287.Y3JvcCw0NTExLDM1MzAsMCwzMw.jpg" alt="">
-            <!-- <h4 class="title">title</h4>  -->
-        </div>
-      </a>
-      <a href="/photos">
-        <div class="album-cover">
-          <img class="cover-image" src="https://mir-s3-cdn-cf.behance.net/projects/202/0883f143124287.Y3JvcCw0NTExLDM1MzAsMCwzMw.jpg" alt="">
-            <!-- <h4 class="title">title</h4>  -->
-        </div>
-      </a>
+      <% albums.forEach(function(album, i) { %>
+        <a href="/photos">
+          <div class="album-cover">
+            <img class="cover-image" src="https://mir-s3-cdn-cf.behance.net/projects/202/0883f143124287.Y3JvcCw0NTExLDM1MzAsMCwzMw.jpg" alt="">
+              <!-- <h4 class="title">title</h4>  -->
+          </div>
+        </a>
+      <% }); %>
     </div>
   </body>
 </html>

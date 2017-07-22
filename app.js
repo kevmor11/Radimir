@@ -47,8 +47,10 @@ app.use(cookieSession({
 app.use(fileUpload());
 
 app.get('/', function (req, res, next) {
-  res.render('index', {
-    title: 'Express'
+  connection.query('SELECT * FROM albums', function (err, rows, fields) {
+    if (err) throw err;
+
+    res.render('index', { albums: rows });
   });
 });
 
