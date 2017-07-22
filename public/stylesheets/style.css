@@ -51,7 +51,7 @@ body {
   background-image: url(../public/images/background.png);
 }
 
-a, p {
+ a.socials, p {
   font-size: 1.4em;
   padding: 4px;
   font-family: 'AUdimat-Regular';

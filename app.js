@@ -7,11 +7,13 @@ var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var auth = require('basic-auth-connect');
 var cookieSession = require("cookie-session");
+// TODO create thumbnails of all the images (or maybe just the cover images)
 var gm = require('gm').subClass({
   imageMagick: true
 });
 var bcrypt = require('bcrypt');
-const fileUpload = require('express-fileupload');
+var fileUpload = require('express-fileupload');
+var Gallery = require('express-photo-gallery');
 
 var app = express();
 
@@ -112,6 +114,8 @@ app.post('/upload', function(req, res) {
   const title = req.body.title;
   const description = req.body.description;
 
+  console.log("ID", req.files.image);
+
   const file = req.files.image;
 
   // Use the mv() method to place the file somewhere on your server
@@ -156,6 +160,9 @@ app.post('/new-album', function (req, res) {
 app.get('/success', function (req, res, next) {
   res.render('success');
 });
+
+// TODO store each album in a different directory?
+app.use('/photos', Gallery('public/uploads/', 'Demo gallery'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
