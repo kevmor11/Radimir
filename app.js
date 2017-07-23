@@ -166,8 +166,14 @@ app.get('/success', function (req, res, next) {
   res.render('success');
 });
 
-// TODO store each album in a different directory?
-app.use('/photos', Gallery('public/uploads/', 'Demo gallery'));
+// TODO figure out why the app.use and Gallery function
+// connection.query('SELECT * FROM albums', function (err, rows, fields) {
+//   if (err) throw err;
+
+//   rows.forEach(function(album, i) {
+    app.use('/photos', Gallery('public/uploads/19', 'title'));
+//   })
+// });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
