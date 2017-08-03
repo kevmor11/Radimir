@@ -13,7 +13,6 @@ var gm = require('gm').subClass({
 });
 var bcrypt = require('bcrypt');
 var fileUpload = require('express-fileupload');
-var Gallery = require('express-photo-gallery');
 var mkdirp = require('mkdirp');
 var fs = require('fs');
 require('dotenv').config();
@@ -109,7 +108,6 @@ app.get('/upload', (req, res, next) => {
   connection.query('SELECT * FROM albums', (err, rows, fields) => {
     if (err) throw err;
 
-    // res.render('upload', { albums: rows });
     if (req.session.user_id) {
       res.render('upload', { albums: rows });
     } else {
@@ -123,7 +121,7 @@ app.post('/upload', (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
 
-  console.log("ID", req.body);
+  // console.log("ID", req.body);
 
   const file = req.files.image;
 
@@ -195,18 +193,10 @@ app.get('/success', (req, res) => {
   res.render('success');
 });
 
-  // TODO Replace parameter 1 of Gallery with a variable which we pass in depending on which album is selected
-  // this variable can probably be passed in from index.ejs
-
-  // TODO setup an app.post('/photos') route where I can recieve the album ID in req.body
-
-  // Mike recommended I use app.use('/photos', express.static('photos'))
-
+// make photo gallery work based on my setup, not the demo setup
 app.get('/albums/:album_id/photos', (req, res) => {
   res.render('albums-show');
 });
-
-// app.use('/photos', Gallery(album_folder, 'title'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
