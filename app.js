@@ -49,8 +49,8 @@ app.use(cookieSession({
                       }));
 app.use(fileUpload());
 
-app.get('/', function (req, res, next) {
-  connection.query('SELECT * FROM albums', function (err, rows, fields) {
+app.get('/', (req, res, next) => {
+  connection.query('SELECT * FROM albums', (err, rows, fields) => {
     if (err) throw err;
     console.log('ROWS', rows);
     res.render('index', { albums: rows });
@@ -72,7 +72,7 @@ app.post("/login", (req, res) => {
   var queryUsername = '';
   var queryPassword = '';
 
-  var query = connection.query('SELECT username, password FROM admins WHERE id = 1', function (err, rows, fields) {
+  var query = connection.query('SELECT username, password FROM admins WHERE id = 1', (err, rows, fields) => {
     if (err) throw err;
 
     queryUsername = rows[0].username;
@@ -89,8 +89,6 @@ app.post("/login", (req, res) => {
 
     if (authenticatedUser) {
       console.log("SUCCESS", req.body);
-      // TODO set cookie-session properly
-      // TODO create logout button that destroys session cookie and redirects to Login
       req.session["user_id"] = 1;
       res.redirect("/upload");
     } else {
@@ -107,8 +105,8 @@ app.post("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-app.get('/upload', function (req, res, next) {
-  connection.query('SELECT * FROM albums', function (err, rows, fields) {
+app.get('/upload', (req, res, next) => {
+  connection.query('SELECT * FROM albums', (err, rows, fields) => {
     if (err) throw err;
 
     // res.render('upload', { albums: rows });
@@ -120,7 +118,7 @@ app.get('/upload', function (req, res, next) {
   });
 });
 
-app.post('/upload', function(req, res) {
+app.post('/upload', (req, res) => {
   const album = req.body.album;
   const title = req.body.title;
   const description = req.body.description;
@@ -130,7 +128,7 @@ app.post('/upload', function(req, res) {
   const file = req.files.image;
 
   if (!fs.existsSync(`public/uploads/${album}`)) {
-    mkdirp(`public/uploads/${album}`, function (err) {
+    mkdirp(`public/uploads/${album}`, (err) => {
         if (err) console.error(err)
         else console.log('Directory created successfully!')
     });
@@ -138,7 +136,7 @@ app.post('/upload', function(req, res) {
 
   // Use the mv() method to place the file somewhere on your server
   if (!fs.existsSync(`public/uploads/${album}/${file.name}`)) {
-    file.mv(`public/uploads/${album}/${file.name}`, function(err) {
+    file.mv(`public/uploads/${album}/${file.name}`, (err) => {
       if (err) {
         throw err;
         return res.status(500).send(err);
@@ -146,7 +144,7 @@ app.post('/upload', function(req, res) {
 
       // TODO Figure out if I need to link the database row with the file stored locally - assuming I need some correlation?
       connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(file.name)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
-        function (err, result) {
+        (err, result) => {
           if (err) throw err;
 
           res.redirect('/success');
@@ -155,7 +153,7 @@ app.post('/upload', function(req, res) {
     });
   } else {
     // TODO else if filename already exists, add an incrementing number onto the end
-    file.mv(`public/uploads/${album}/${file.name}`, function(err) {
+    file.mv(`public/uploads/${album}/${file.name}`, (err) => {
       if (err) {
         throw err;
         return res.status(500).send(err);
@@ -163,7 +161,7 @@ app.post('/upload', function(req, res) {
 
       // TODO Figure out if I need to link the database row with the file stored locally - assuming I need some correlation?
       connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(file.name)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
-        function (err, result) {
+        (err, result) => {
           if (err) throw err;
 
           res.redirect('/success');
@@ -174,7 +172,7 @@ app.post('/upload', function(req, res) {
 
 });
 
-app.get('/new-album', function (req, res, next) {
+app.get('/new-album', (req, res, next) => {
   if (req.session.user_id) {
     res.render('new-album');
   } else {
@@ -182,18 +180,18 @@ app.get('/new-album', function (req, res, next) {
   }
 });
 
-app.post('/new-album', function (req, res) {
+app.post('/new-album', (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
     connection.query(`INSERT INTO albums (title, description) VALUES (${mysql.escape(title)}, ${mysql.escape(description)})`,
-      function (err, result) {
+      (err, result) => {
         if (err) throw err;
         res.redirect('/success');
       }
     );
 });
 
-app.get('/success', function (req, res, next) {
+app.get('/success', (req, res) => {
   res.render('success');
 });
 
@@ -204,19 +202,21 @@ app.get('/success', function (req, res, next) {
 
   // Mike recommended I use app.use('/photos', express.static('photos'))
 
-let album_id = 'public/uploads/' + '19' + '/';
+app.get('/albums/:album_id/photos', (req, res) => {
+  res.render('albums-show');
+});
 
-app.use('/photos', Gallery(album_id, 'title'));
+// app.use('/photos', Gallery(album_folder, 'title'));
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
