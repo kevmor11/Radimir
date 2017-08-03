@@ -52,6 +52,7 @@ app.use(fileUpload());
 app.get('/', function (req, res, next) {
   connection.query('SELECT * FROM albums', function (err, rows, fields) {
     if (err) throw err;
+    console.log('ROWS', rows);
     res.render('index', { albums: rows });
   });
 });
@@ -87,10 +88,10 @@ app.post("/login", (req, res) => {
     const authenticatedUser = authenticated(req.body.username, req.body.password);
 
     if (authenticatedUser) {
-      console.log("SUCCESS");
+      console.log("SUCCESS", req.body);
       // TODO set cookie-session properly
       // TODO create logout button that destroys session cookie and redirects to Login
-      req.session["user_id"] = (authenticatedUser.id);
+      req.session["user_id"] = 1;
       res.redirect("/upload");
     } else {
       console.log("FAIL");
@@ -100,16 +101,23 @@ app.post("/login", (req, res) => {
 
 });
 
+app.post("/logout", (req, res) => {
+  req.session["user_id"] = null;
+  // Give the user a message telling them they have successfully logged out
+  res.redirect("/login");
+});
+
 app.get('/upload', function (req, res, next) {
   connection.query('SELECT * FROM albums', function (err, rows, fields) {
     if (err) throw err;
 
-    res.render('upload', { albums: rows });
+    // res.render('upload', { albums: rows });
+    if (req.session.user_id) {
+      res.render('upload', { albums: rows });
+    } else {
+      res.redirect('login');
+    }
   });
-  // if (req.session.user_id) {
-  // } else {
-  //   res.redirect('/upload');
-  // }
 });
 
 app.post('/upload', function(req, res) {
@@ -129,26 +137,49 @@ app.post('/upload', function(req, res) {
   }
 
   // Use the mv() method to place the file somewhere on your server
-  // TODO if filename already exists, append a incrementing number onto the end of the filename
-  file.mv(`public/uploads/${album}/${file.name}`, function(err) {
-    if (err) {
-      throw err;
-      return res.status(500).send(err);
-    }
-
-    // TODO Figure out if I need to link the database row with the file stored locally - assuming I need some correlation?
-    connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(file.name)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
-      function (err, result) {
-        if (err) throw err;
-
-        res.redirect('/success');
+  if (!fs.existsSync(`public/uploads/${album}/${file.name}`)) {
+    file.mv(`public/uploads/${album}/${file.name}`, function(err) {
+      if (err) {
+        throw err;
+        return res.status(500).send(err);
       }
-    );
-  });
+
+      // TODO Figure out if I need to link the database row with the file stored locally - assuming I need some correlation?
+      connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(file.name)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
+        function (err, result) {
+          if (err) throw err;
+
+          res.redirect('/success');
+        }
+      );
+    });
+  } else {
+    // TODO else if filename already exists, add an incrementing number onto the end
+    file.mv(`public/uploads/${album}/${file.name}`, function(err) {
+      if (err) {
+        throw err;
+        return res.status(500).send(err);
+      }
+
+      // TODO Figure out if I need to link the database row with the file stored locally - assuming I need some correlation?
+      connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(file.name)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
+        function (err, result) {
+          if (err) throw err;
+
+          res.redirect('/success');
+        }
+      );
+    });
+  }
+
 });
 
 app.get('/new-album', function (req, res, next) {
-  res.render('new-album');
+  if (req.session.user_id) {
+    res.render('new-album');
+  } else {
+    res.redirect('login');
+  }
 });
 
 app.post('/new-album', function (req, res) {
@@ -166,14 +197,16 @@ app.get('/success', function (req, res, next) {
   res.render('success');
 });
 
-// TODO figure out why the app.use and Gallery function
-// connection.query('SELECT * FROM albums', function (err, rows, fields) {
-//   if (err) throw err;
+  // TODO Replace parameter 1 of Gallery with a variable which we pass in depending on which album is selected
+  // this variable can probably be passed in from index.ejs
 
-//   rows.forEach(function(album, i) {
-    app.use('/photos', Gallery('public/uploads/19', 'title'));
-//   })
-// });
+  // TODO setup an app.post('/photos') route where I can recieve the album ID in req.body
+
+  // Mike recommended I use app.use('/photos', express.static('photos'))
+
+let album_id = 'public/uploads/' + '19' + '/';
+
+app.use('/photos', Gallery(album_id, 'title'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
