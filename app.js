@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var auth = require('basic-auth-connect');
 var cookieSession = require("cookie-session");
-// TODO create thumbnails of all the images (or maybe just the cover images)
+// TODO create thumbnails of all the images
 var gm = require('gm').subClass({
   imageMagick: true
 });
@@ -48,10 +48,10 @@ app.use(cookieSession({
                       }));
 app.use(fileUpload());
 
-app.get('/', (req, res, next) => {
+app.get('/', (req, res) => {
   connection.query('SELECT * FROM albums', (err, rows, fields) => {
     if (err) throw err;
-    console.log('ROWS', rows);
+    // console.log('ROWS', rows);
     res.render('index', { albums: rows });
   });
 });
@@ -68,14 +68,11 @@ app.get("/login", (req, res) => {
 
 app.post("/login", (req, res) => {
 
-  var queryUsername = '';
-  var queryPassword = '';
-
   var query = connection.query('SELECT username, password FROM admins WHERE id = 1', (err, rows, fields) => {
     if (err) throw err;
 
-    queryUsername = rows[0].username;
-    queryPassword = rows[0].password;
+    var queryUsername = rows[0].username;
+    var queryPassword = rows[0].password;
 
     function authenticated(username, password) {
       if (queryUsername === username && bcrypt.compareSync(password, queryPassword, 10)) {
@@ -104,7 +101,7 @@ app.post("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-app.get('/upload', (req, res, next) => {
+app.get('/upload', (req, res) => {
   connection.query('SELECT * FROM albums', (err, rows, fields) => {
     if (err) throw err;
 
@@ -170,7 +167,7 @@ app.post('/upload', (req, res) => {
 
 });
 
-app.get('/new-album', (req, res, next) => {
+app.get('/new-album', (req, res) => {
   if (req.session.user_id) {
     res.render('new-album');
   } else {
