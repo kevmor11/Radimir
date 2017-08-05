@@ -51,7 +51,20 @@ app.use(fileUpload());
 app.get('/', (req, res) => {
   connection.query('SELECT * FROM albums', (err, rows, fields) => {
     if (err) throw err;
-    // console.log('ROWS', rows);
+
+    rows.forEach((album, i) => {
+      let album_id = album.id;
+
+
+      fs.readdir('./public/uploads/' + album_id, (err, files) => {
+        console.log("FILES", files[0]);
+        if(err) throw err;
+
+      });
+    });
+
+    console.log("ROWS", rows);
+
     res.render('index', { albums: rows });
   });
 });

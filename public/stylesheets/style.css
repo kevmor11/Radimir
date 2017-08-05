@@ -9,8 +9,8 @@ div.container {
 }
 
 div.album-cover {
-  background-color: black;
-  border: 1.4px solid lightgray;
+  /* background-color: black; */
+  /* border: 1.4px solid lightgray; */
   height: 22em;
   width: 25em;
   margin: 2em 3em;
@@ -21,10 +21,11 @@ div.album-cover {
 }
 
 h4.title {
-  color: white;
+  color: black;
   font-family: 'AUdimat-Regular';
   position: relative;
-  left: 42%;
+  text-align: center;
+  top: 5%;
 }
 
 html, body {
@@ -41,7 +42,7 @@ img.cover-image {
   background-repeat:   no-repeat;
   background-size:     cover;
   /* height: 100%; */
-  border-radius: 2px 2px 0 0;
+  border-radius: 2px;
 }
 
 body {
