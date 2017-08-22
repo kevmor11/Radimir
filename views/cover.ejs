@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head %>
+  </head>
+  <body>
+
+      <!-- Navbar -->
+      <% include ../partials/navbar %>
+
+        <div class="upload-form">
+          <form action="/upload" method="post" enctype="multipart/form-data">
+            <h3 class="form-title">choose album cover</h3>
+
+            <div class="form-group">
+              <label for="title">album:</label>
+              <select class="form-control" name="album" required >
+                <option disabled selected value> -- select an album -- </option>
+                 <!-- For each album, render an <option> tag for the dropdown  -->
+                 <% albums.forEach(function(album, i) { %>
+                  <option value="<%= album.id %>"><%= album.title %></option>
+                <% }); %>
+              </select>
+            </div>
+            <!-- TODO based on which album is selected, only render the images belonging to that album in the dropdown -->
+            <div class="form-group">
+              <label for="title">cover:</label>
+              <select class="form-control" name="cover" required >
+                <option disabled selected value> -- select an cover image -- </option>
+                 <!-- For each album, render an <option> tag for the dropdown  -->
+                 <% images.forEach(function(image, i) { %>
+                  <option value="<%= image.id %>"><%= image.file_name %></option>
+                <% }); %>
+              </select>
+            </div>
+            <button class="btn btn-primary" type="submit" style="width: 10em; margin-left: 18em" value="Submit">upload</button>
+          </form>
+        </div>
+      </body>
+</html>

@@ -130,9 +130,6 @@ app.post('/upload', (req, res) => {
   const album = req.body.album;
   const title = req.body.title;
   const description = req.body.description;
-
-  // console.log("ID", req.body);
-
   const file = req.files.image;
 
   if (!fs.existsSync(`public/uploads/${album}`)) {
@@ -198,6 +195,35 @@ app.post('/new-album', (req, res) => {
       }
     );
 });
+
+app.get('/cover', (req, res) => {
+  connection.query('SELECT * FROM albums', (err, albumsRows, fields) => {
+    if (err) throw err;
+
+    connection.query('SELECT * FROM images', (err, imagesRows, fields) => {
+      if (err) throw err;
+
+      if (req.session.user_id) {
+        res.render('cover', {
+          albums: albumsRows,
+          images: imagesRows
+        });
+      } else {
+        res.redirect('login');
+      }
+    });
+  });
+});
+
+// app.post('/cover', (req, res) => {
+//   const cover = req.body.cover;
+//     connection.query(`INSERT INTO albums (title, description) VALUES (${mysql.escape(title)}, ${mysql.escape(description)})`,
+//       (err, result) => {
+//         if (err) throw err;
+//         res.redirect('/success');
+//       }
+//     );
+// });
 
 app.get('/success', (req, res) => {
   res.render('success');

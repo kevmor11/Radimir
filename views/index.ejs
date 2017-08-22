@@ -26,11 +26,13 @@
       <div id="lightgallery">
         <% albums.forEach((album, i) => { %>
           <% let album_id = album.id %>
-          <!-- TODO change href link so it opens lightGallery album - link to image within an album  -->
 
-          <a href="/uploads/19/16541122548_2428167c86_z.jpg">
+          <!-- TODO dynamically render images from local directories per each folder, instead of hard-coding  -->
+          <!-- TODO store file name of album cover image so I can insert that instead of hardcoding -->
+          <!-- TODO render album images instead of hard-coding -->
+          <a href="/uploads/<%= album_id %>/stealacar.png">
             <div class="album-cover">
-              <img class="cover-image" src="/uploads/19/16541122548_2428167c86_z.jpg" alt="">
+              <img class="cover-image" src="/uploads/<%= album_id %>/16541122548_2428167c86_z.jpg" alt="">
               <h4 class="title"><%= album.title%></h4>
             </div>
           </a>
