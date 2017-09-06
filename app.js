@@ -158,7 +158,6 @@ app.post('/upload', (req, res) => {
       connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(file.name)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
         (err, result) => {
           if (err) throw err;
-
           res.redirect('/success');
         }
       );
@@ -181,7 +180,6 @@ app.post('/upload', (req, res) => {
       );
     });
   }
-
 });
 
 app.get('/new-album', (req, res) => {
@@ -196,7 +194,7 @@ app.post('/new-album', (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
     connection.query(`INSERT INTO albums (title, description) VALUES (${mysql.escape(title)}, ${mysql.escape(description)})`,
-      (err, result) => {
+      (err) => {
         if (err) throw err;
         res.redirect('/success');
       }
@@ -204,22 +202,21 @@ app.post('/new-album', (req, res) => {
 });
 
 app.get('/cover', (req, res) => {
-  connection.query('SELECT * FROM albums', (err, albumsRows, fields) => {
-    if (err) throw err;
-
-    connection.query('SELECT * FROM images', (err, imagesRows, fields) => {
+  if (req.session.user_id) {
+    connection.query('SELECT * FROM albums', (err, albumsRows, fields) => {
       if (err) throw err;
 
-      if (req.session.user_id) {
+      connection.query('SELECT * FROM images', (err, imagesRows, fields) => {
+        if (err) throw err;
         res.render('cover', {
           albums: albumsRows,
           images: imagesRows
         });
-      } else {
-        res.redirect('login');
-      }
+      });
     });
-  });
+  } else {
+    res.redirect('login');
+  }
 });
 
 app.post('/cover', (req, res) => {
@@ -248,10 +245,10 @@ app.get('/cover-success', (req, res) => {
   res.render('cover-success');
 });
 
-// make photo gallery work based on my setup, not the demo setup
-app.get('/albums/:album_id/photos', (req, res) => {
-  res.render('albums-show');
-});
+// // make photo gallery work based on my setup, not the demo setup
+// app.get('/albums/:album_id/photos', (req, res) => {
+//   res.render('albums-show');
+// });
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
