@@ -49,23 +49,30 @@ app.use(cookieSession({
 app.use(fileUpload());
 
 app.get('/', (req, res) => {
-  connection.query('SELECT * FROM albums', (err, rows, fields) => {
+  connection.query('SELECT * FROM albums', (err, albums) => {
     if (err) throw err;
 
-    rows.forEach((album, i) => {
+    albums.forEach((album, i) => {
       let album_id = album.id;
 
-
       fs.readdir('./public/uploads/' + album_id, (err, files) => {
-        console.log("FILES", files[0]);
+        // console.log("FILE", files);
         if(err) throw err;
 
       });
     });
 
-    console.log("ROWS", rows);
+    // TODO - get cover photo file names and pass as a template variable
+    // TODO - coordinate which cover file names correspond to which albums
+    connection.query('SELECT file_name FROM images WHERE cover=1', (err, files) => {
+      console.log("ALBUMS", albums);
+      console.log("FILES", files);
+      res.render('index', {
+        albums: albums,
+        covers: files
+      });
+    });
 
-    res.render('index', { albums: rows });
   });
 });
 
@@ -215,18 +222,30 @@ app.get('/cover', (req, res) => {
   });
 });
 
-// app.post('/cover', (req, res) => {
-//   const cover = req.body.cover;
-//     connection.query(`INSERT INTO albums (title, description) VALUES (${mysql.escape(title)}, ${mysql.escape(description)})`,
-//       (err, result) => {
-//         if (err) throw err;
-//         res.redirect('/success');
-//       }
-//     );
-// });
+app.post('/cover', (req, res) => {
+  const albumID = req.body.album;
+  const imageID = req.body.cover;
+  // TODO - if a cover image is already set, reset it to 0 before setting the new cover image
+  connection.query(`UPDATE images SET cover=0 WHERE album_id=${albumID}`,
+    (err) => {
+      if (err) throw err;
+      connection.query(`UPDATE images SET cover=1 WHERE (album_id=${albumID} AND id=${imageID})`,
+        (err) => {
+          if (err) throw err;
+          res.redirect('/cover-success');
+        }
+      );
+    }
+  );
+
+});
 
 app.get('/success', (req, res) => {
   res.render('success');
+});
+
+app.get('/cover-success', (req, res) => {
+  res.render('cover-success');
 });
 
 // make photo gallery work based on my setup, not the demo setup
