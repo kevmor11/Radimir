@@ -20,6 +20,10 @@ div.album-cover {
   padding-bottom: 30px
 }
 
+div.lg-cover {
+  display: inline;
+}
+
 h4.title {
   color: black;
   font-family: 'AUdimat-Regular';
@@ -63,6 +67,10 @@ body {
 a {
   color: black !important;
   text-decoration: none !important;
+}
+
+a#lg-download {
+  display: none;
 }
 
 header {

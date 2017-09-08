@@ -55,21 +55,23 @@ app.get('/', (req, res) => {
     albums.forEach((album, i) => {
       let album_id = album.id;
 
+      // read local file directories
       fs.readdir('./public/uploads/' + album_id, (err, files) => {
         // console.log("FILE", files);
         if(err) throw err;
 
       });
     });
+    connection.query('SELECT * FROM images', (err, images) => {
+      if (err) throw err;
 
-    // TODO - get cover photo file names and pass as a template variable
-    // TODO - coordinate which cover file names correspond to which albums
-    connection.query('SELECT file_name FROM images WHERE cover=1', (err, files) => {
-      console.log("ALBUMS", albums);
-      console.log("FILES", files);
-      res.render('index', {
-        albums: albums,
-        covers: files
+      connection.query('SELECT file_name FROM images WHERE cover=1', (err, covers) => {
+        console.log("ALBUMS", albums);
+        res.render('index', {
+          albums: albums,
+          covers: covers,
+          images: images
+        });
       });
     });
 
