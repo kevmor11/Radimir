@@ -23,30 +23,26 @@
       </div>
       <p class="rvd">R V D</p>
     </header>
-      <!-- TODO render album-covers, titles based on album data  -->
-      <!-- TODO see if I can generate a div with id=lightgallery for each album and then generate img tags for each album within each gallery div -->
-      <!-- set all img tags to display: none except the cover photo -->
-
-      <!-- TODO dynamically render images from local directories per each folder, instead of hard-coding  -->
-      <!-- TODO store file name of album cover image so I can insert that instead of hardcoding -->
-      <!-- TODO render album images instead of hard-coding -->
     <div class="container">
+      <!-- TODO do not display album if cover image is not selected -->
       <% albums.forEach((album, i) => { %>
-        <% let album_id = album.id %>
-        <div id="lightgallery-<%= i %>" class="lg-cover">
-          <a href="/uploads/<%= album_id %>/<%= covers[i].file_name %>">
-            <div class="album-cover">
-              <img class="cover-image" src="/uploads/<%= album_id %>/<%= covers[i].file_name %>" alt="">
-              <h4 class="title"><%= album.title %></h4>
-            </div>
-          </a>
-          <a href="/uploads/<%= album_id %>/<%= covers[i].file_name %>" style="display: none;">
-            <div class="album-cover">
-              <img src="/uploads/19/Screen Shot 2017-05-11 at 11.32.16 PM.png" alt="">
-            </div>
-          </a>
-        </div>
+        <% if(album.cover) { %>
+          <div id="lightgallery-<%= i %>" class="lg-cover">
+            <a href="/uploads/<%= album.id %>/<%= covers[i].file_name %>">
+              <div class="album-cover">
+                <img class="cover-image" src="/uploads/<%= album.id %>/<%= covers[i].file_name %>" alt="">
+                <h4 class="title"><%= album.title %></h4>
+              </div>
+            </a>
+            <% images.forEach((image) => { %>
+              <% if(image.album_id === album.id && image.file_name !== covers[i].file_name) { %>
+                <a href="/uploads/<%= album.id %>/<%= image.file_name %>" style="display: none;">
+                  <img src="/uploads/<%= album.id %>/<%= image.file_name %>" alt="">
+                </a>
+              <% }  %>
+            <% })%>
+          </div>
+        <% } %>
       <% }); %>
-    </div>
   </body>
 </html>

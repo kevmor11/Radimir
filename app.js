@@ -5,12 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
-var auth = require('basic-auth-connect');
 var cookieSession = require("cookie-session");
-// TODO create thumbnails of all the images
-var gm = require('gm').subClass({
-  imageMagick: true
-});
 var bcrypt = require('bcrypt');
 var fileUpload = require('express-fileupload');
 var mkdirp = require('mkdirp');
@@ -49,23 +44,14 @@ app.use(cookieSession({
 app.use(fileUpload());
 
 app.get('/', (req, res) => {
-  connection.query('SELECT * FROM albums', (err, albums) => {
+  connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
     if (err) throw err;
 
-    albums.forEach((album, i) => {
-      let album_id = album.id;
-
-      // read local file directories
-      fs.readdir('./public/uploads/' + album_id, (err, files) => {
-        // console.log("FILE", files);
-        if(err) throw err;
-
-      });
-    });
     connection.query('SELECT * FROM images', (err, images) => {
       if (err) throw err;
 
-      connection.query('SELECT file_name FROM images WHERE cover=1', (err, covers) => {
+      connection.query('SELECT file_name FROM images WHERE cover=1 ORDER BY album_id DESC', (err, covers) => {
+        if (err) throw err;
         console.log("ALBUMS", albums);
         res.render('index', {
           albums: albums,
@@ -74,7 +60,6 @@ app.get('/', (req, res) => {
         });
       });
     });
-
   });
 });
 
@@ -156,7 +141,6 @@ app.post('/upload', (req, res) => {
         return res.status(500).send(err);
       }
 
-      // TODO Figure out if I need to link the database row with the file stored locally - assuming I need some correlation?
       connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(file.name)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
         (err, result) => {
           if (err) throw err;
@@ -172,7 +156,6 @@ app.post('/upload', (req, res) => {
         return res.status(500).send(err);
       }
 
-      // TODO Figure out if I need to link the database row with the file stored locally - assuming I need some correlation?
       connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(file.name)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
         (err, result) => {
           if (err) throw err;
@@ -195,7 +178,7 @@ app.get('/new-album', (req, res) => {
 app.post('/new-album', (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
-    connection.query(`INSERT INTO albums (title, description) VALUES (${mysql.escape(title)}, ${mysql.escape(description)})`,
+    connection.query(`INSERT INTO albums (title, description, cover) VALUES (${mysql.escape(title)}, ${mysql.escape(description)}, 0)`,
       (err) => {
         if (err) throw err;
         res.redirect('/success');
@@ -224,19 +207,16 @@ app.get('/cover', (req, res) => {
 app.post('/cover', (req, res) => {
   const albumID = req.body.album;
   const imageID = req.body.cover;
-  // TODO - if a cover image is already set, reset it to 0 before setting the new cover image
-  connection.query(`UPDATE images SET cover=0 WHERE album_id=${albumID}`,
-    (err) => {
+  connection.query(`UPDATE images SET cover=0 WHERE album_id=${albumID}`, (err) => {
+    if (err) throw err;
+    connection.query(`UPDATE images SET cover=1 WHERE (album_id=${albumID} AND id=${imageID})`, (err) => {
       if (err) throw err;
-      connection.query(`UPDATE images SET cover=1 WHERE (album_id=${albumID} AND id=${imageID})`,
-        (err) => {
-          if (err) throw err;
-          res.redirect('/cover-success');
-        }
-      );
-    }
-  );
-
+      connection.query(`UPDATE albums SET cover=1 WHERE id=${albumID}`, (err) => {
+        if (err) throw err;
+        res.redirect('/cover-success');
+      });
+    });
+  });
 });
 
 app.get('/success', (req, res) => {
@@ -247,11 +227,6 @@ app.get('/cover-success', (req, res) => {
   res.render('cover-success');
 });
 
-// // make photo gallery work based on my setup, not the demo setup
-// app.get('/albums/:album_id/photos', (req, res) => {
-//   res.render('albums-show');
-// });
-
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   var err = new Error('Not Found');
@@ -260,7 +235,7 @@ app.use((req, res, next) => {
 });
 
 // error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

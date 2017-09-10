@@ -25,7 +25,7 @@
           <label for="title">cover image: (title - file name)</label>
           <select class="form-control" name="cover" required >
             <option disabled selected value> -- select a cover image -- </option>
-            <!-- TODO based on which album is selected, only render the images belonging to that album in the dropdown -->
+            <!-- TODO figure out AJAX call so as to rerender second select tag based on first selection -->
             <% var slctdAlbumID = 19; %>
             <script>
               $( "#album-select" ).change(() => {
@@ -33,7 +33,7 @@
                 console.log("ID", slctdAlbumID);
               });
             </script>
-            <% images.filter((image) => image.album_id === 19).forEach((image, i) => { %>
+            <% images.filter((image) => image.album_id === 22).forEach((image, i) => { %>
               <option value="<%= image.id %>"><%= image.title + " - " + image.file_name %></option>
             <% }); %>
           </select>

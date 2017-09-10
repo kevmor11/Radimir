@@ -12,14 +12,18 @@
 
     <div class="wrapper">
       <form class="form-signin" action="/login" method="post">
-      <h3 class="form-signin-heading" style="margin-left: 3.8em; margin-bottom: .6em;">login boiiiiii</h3>
-      <input type="text" class="form-control" name="username" placeholder="username" required="" autofocus="" /><br />
-      <input type="password" class="form-control" name="password" placeholder="password" required=""/>
-      <label class="checkbox" style="margin-left: 1.35em;">
-      <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> remember me
-      </label>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">login</button>
-    </form>
-  </div>
+        <h3 class="form-signin-heading" style="margin-left: 3.8em; margin-bottom: .6em;">login boiiiiii</h3>
+        <label>username</label>
+        <input id="username" autocomplete="on" type="text" class="form-control" name="username" placeholder="username" required="" autofocus="" />
+        <br />
+        <label>password</label>
+        <input id="pass" autocomplete="on" type="password" class="form-control" name="password" placeholder="password" required=""/>
+        <!-- <label class="checkbox" style="margin-left: 1.35em;">
+          <input type="checkbox" value="remember-me" id="remember_me"> remember me
+        </label> -->
+        <br />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">login</button>
+      </form>
+    </div>
   </body>
 </html>
