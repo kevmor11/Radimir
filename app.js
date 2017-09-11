@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
     connection.query('SELECT * FROM images', (err, images) => {
       if (err) throw err;
 
-      connection.query('SELECT file_name FROM images WHERE cover=1 ORDER BY album_id DESC', (err, covers) => {
+      connection.query('SELECT file_name, title, description FROM images WHERE cover=1 ORDER BY album_id DESC', (err, covers) => {
         if (err) throw err;
         console.log("ALBUMS", albums);
         res.render('index', {

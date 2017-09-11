@@ -4,13 +4,6 @@
     <% include ../partials/head %>
   </head>
   <body class="home" oncontextmenu="return false">
-    <% albums.forEach((album, i) => { %>
-      <script type="text/javascript">
-        $(document).ready(() => {
-          $("#lightgallery-<%= i %>").lightGallery();
-        });
-      </script>
-    <% }); %>
     <header class="header">
       <div class"social-header">
         <a class="socials" href="https://www.instagram.com/rvdimir/">I N S T A G R A M </a>
@@ -23,20 +16,30 @@
       </div>
       <p class="rvd">R V D</p>
     </header>
-    <div class="container">
-      <!-- TODO do not display album if cover image is not selected -->
+    <% albums.forEach((album, i) => { %>
+      <script type="text/javascript">
+        $(document).ready(() => {
+          $("#lightgallery-<%= i %>").lightGallery({
+            download: false,
+            share: true
+          });
+        });
+      </script>
+    <% }); %>
+    <div class="container" class"z-index: 9999">
       <% albums.forEach((album, i) => { %>
         <% if(album.cover) { %>
           <div id="lightgallery-<%= i %>" class="lg-cover">
-            <a href="/uploads/<%= album.id %>/<%= covers[i].file_name %>">
+            <a href="/uploads/<%= album.id %>/<%= covers[i].file_name %>" data-sub-html="<h3><%= covers[i].title %></h3><h4><%= covers[i].description %></h4>">
               <div class="album-cover">
                 <img class="cover-image" src="/uploads/<%= album.id %>/<%= covers[i].file_name %>" alt="">
                 <h4 class="title"><%= album.title %></h4>
               </div>
             </a>
             <% images.forEach((image) => { %>
+              <% console.log("Kevin", covers) %>
               <% if(image.album_id === album.id && image.file_name !== covers[i].file_name) { %>
-                <a href="/uploads/<%= album.id %>/<%= image.file_name %>" style="display: none;">
+                <a href="/uploads/<%= album.id %>/<%= image.file_name %>" style="display: none;" data-sub-html="<h3><%= image.title %></h3><h4><%= image.description %></h4>">
                   <img src="/uploads/<%= album.id %>/<%= image.file_name %>" alt="">
                 </a>
               <% }  %>

@@ -2,6 +2,10 @@ body.home {
   margin: 30px;
 }
 
+p a {
+  z-index: 1;
+}
+
 div.container {
   width: 100%;
   margin-left: 1.6em;
@@ -66,10 +70,6 @@ body {
 a {
   color: black !important;
   text-decoration: none !important;
-}
-
-a#lg-download {
-  display: none;
 }
 
 header {
