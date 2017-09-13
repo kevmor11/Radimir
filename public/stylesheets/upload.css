@@ -10,7 +10,7 @@
   border-right: 1px solid lightgrey;
   border-bottom: 1px solid lightgrey;
   border-radius: 0 0 5px 5px;
-  width: 50em;
+  width: 60em;
 }
 
 #navbar ul {
@@ -35,6 +35,10 @@
   color: #2f6fd6;
 }
 
+button.delete {
+  display: inline;
+}
+
 .upload-form {
   width: 50em;
   margin: 0 auto;
@@ -46,6 +50,31 @@
   -moz-box-shadow:    3px 3px 3px 3px rgba(211,211,211,.3);
   -webkit-box-shadow: 3px 3px 3px 3px rgba(211,211,211,.3);
   box-shadow:         3px 3px 3px 3px rgba(211,211,211,.3);
+}
+
+div.edit {
+  margin: 3em .5em .5em .5em;
+}
+
+div.edit-image {
+  background-color: whitesmoke;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  margin: 1% 15%;
+}
+
+h2.edit-album-title {
+  margin-left: 46%;
+}
+
+h4.edit-album-title {
+  margin-left: 44%;
+}
+
+img.edit {
+  display: inline;
+  margin: .5em;
+  width: 10em;
 }
 
 #input-description {

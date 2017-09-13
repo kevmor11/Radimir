@@ -46,13 +46,10 @@ app.use(fileUpload());
 app.get('/', (req, res) => {
   connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
     if (err) throw err;
-
     connection.query('SELECT * FROM images', (err, images) => {
       if (err) throw err;
-
-      connection.query('SELECT file_name, title, description FROM images WHERE cover=1 ORDER BY album_id DESC', (err, covers) => {
+      connection.query('SELECT * FROM images WHERE cover=1 ORDER BY album_id DESC', (err, covers) => {
         if (err) throw err;
-        console.log("ALBUMS", albums);
         res.render('index', {
           albums: albums,
           covers: covers,
@@ -75,7 +72,7 @@ app.get("/login", (req, res) => {
 
 app.post("/login", (req, res) => {
 
-  var query = connection.query('SELECT username, password FROM admins WHERE id = 1', (err, rows, fields) => {
+  var query = connection.query('SELECT username, password FROM admins WHERE id = 1', (err, rows) => {
     if (err) throw err;
 
     var queryUsername = rows[0].username;
@@ -91,11 +88,9 @@ app.post("/login", (req, res) => {
     const authenticatedUser = authenticated(req.body.username, req.body.password);
 
     if (authenticatedUser) {
-      console.log("SUCCESS", req.body);
       req.session["user_id"] = 1;
       res.redirect("/upload");
     } else {
-      console.log("FAIL");
       res.status(403).send("Woops, try again.<br><a href='/login'>Login</a>");
     }
   });
@@ -109,7 +104,7 @@ app.post("/logout", (req, res) => {
 });
 
 app.get('/upload', (req, res) => {
-  connection.query('SELECT * FROM albums', (err, rows, fields) => {
+  connection.query('SELECT * FROM albums', (err, rows) => {
     if (err) throw err;
 
     if (req.session.user_id) {
@@ -188,14 +183,14 @@ app.post('/new-album', (req, res) => {
 
 app.get('/cover', (req, res) => {
   if (req.session.user_id) {
-    connection.query('SELECT * FROM albums', (err, albumsRows, fields) => {
+    connection.query('SELECT * FROM albums', (err, albums) => {
       if (err) throw err;
 
-      connection.query('SELECT * FROM images', (err, imagesRows, fields) => {
+      connection.query('SELECT * FROM images', (err, images) => {
         if (err) throw err;
         res.render('cover', {
-          albums: albumsRows,
-          images: imagesRows
+          albums: albums,
+          images: images
         });
       });
     });
@@ -216,6 +211,70 @@ app.post('/cover', (req, res) => {
         res.redirect('/cover-success');
       });
     });
+  });
+});
+
+// TODO figure out editing of album and image titles
+// TODO figure out deleting of albums
+
+app.get('/delete', (req, res) => {
+  if (req.session.user_id) {
+    connection.query('SELECT * FROM albums', (err, albums) => {
+      if (err) throw err;
+
+      connection.query('SELECT * FROM images', (err, images) => {
+        if (err) throw err;
+        res.render('delete', {
+          albums: albums,
+          images: images
+        });
+      });
+    });
+  } else {
+    res.redirect('login');
+  }
+});
+
+// app.post('/edit', (req, res) => {
+//   const albumID = req.body.album;
+//   const imageID = req.body.cover;
+//   connection.query(`UPDATE images SET cover=0 WHERE album_id=${albumID}`, (err) => {
+//     if (err) throw err;
+//     connection.query(`UPDATE images SET cover=1 WHERE (album_id=${albumID} AND id=${imageID})`, (err) => {
+//       if (err) throw err;
+//       connection.query(`UPDATE albums SET cover=1 WHERE id=${albumID}`, (err) => {
+//         if (err) throw err;
+//         res.redirect('/edit-success');
+//       });
+//     });
+//   });
+// });
+
+app.post('/delete', (req, res) => {
+  const imageID = req.body.image_id;
+  const fileName = req.body.image_filename;
+  const albumID = req.body.album_id;
+  connection.query('SELECT id FROM images WHERE cover=1', (err, covers) => {
+    if (err) throw err;
+    covers.forEach((cover, i) => {
+      if (cover.id == imageID) {
+        console.log("SUCCESS");
+        connection.query(`UPDATE albums SET cover=0 WHERE id=${albumID}`, (err) => {
+          if (err) throw err;
+        });
+      }
+    });
+    connection.query(`DELETE FROM images WHERE ID=${imageID}`, (err) => {
+      if (err) throw err;
+      fs.unlink(`./public/uploads/${albumID}/${fileName}`, (err) => {
+        if (err) {
+            console.log("failed to delete local image: "+err);
+        } else {
+            console.log('successfully deleted local image');
+        }
+      });
+    });
+    res.redirect('delete');
   });
 });
 

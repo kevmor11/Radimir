@@ -16,6 +16,7 @@
       </div>
       <p class="rvd">R V D</p>
     </header>
+    <!-- TODO onClick of cover image, add display: none to text elements on home page,  -->
     <% albums.forEach((album, i) => { %>
       <script type="text/javascript">
         $(document).ready(() => {
@@ -29,22 +30,25 @@
     <div class="container" class"z-index: 9999">
       <% albums.forEach((album, i) => { %>
         <% if(album.cover) { %>
-          <div id="lightgallery-<%= i %>" class="lg-cover">
-            <a href="/uploads/<%= album.id %>/<%= covers[i].file_name %>" data-sub-html="<h3><%= covers[i].title %></h3><h4><%= covers[i].description %></h4>">
-              <div class="album-cover">
-                <img class="cover-image" src="/uploads/<%= album.id %>/<%= covers[i].file_name %>" alt="">
-                <h4 class="title"><%= album.title %></h4>
-              </div>
-            </a>
-            <% images.forEach((image) => { %>
-              <% console.log("Kevin", covers) %>
-              <% if(image.album_id === album.id && image.file_name !== covers[i].file_name) { %>
-                <a href="/uploads/<%= album.id %>/<%= image.file_name %>" style="display: none;" data-sub-html="<h3><%= image.title %></h3><h4><%= image.description %></h4>">
-                  <img src="/uploads/<%= album.id %>/<%= image.file_name %>" alt="">
+          <% covers.forEach((cover, ii) => { %>
+            <% if(cover.album_id == album.id) { %>
+              <div id="lightgallery-<%= i %>" class="lg-cover">
+                <a href="/uploads/<%= album.id %>/<%= cover.file_name %>" data-sub-html="<h3><%= cover.title %></h3><h4><%= cover.description %></h4>">
+                  <div class="album-cover">
+                    <img class="cover-image" src="/uploads/<%= album.id %>/<%= cover.file_name %>" alt="">
+                    <h4 class="title"><%= album.title %></h4>
+                  </div>
                 </a>
-              <% }  %>
-            <% })%>
-          </div>
+                <% images.forEach((image) => { %>
+                  <% if(image.album_id === album.id && image.file_name !== cover.file_name && images.length > 0) { %>
+                    <a href="/uploads/<%= album.id %>/<%= image.file_name %>" style="display: none;" data-sub-html="<h3><%= image.title %></h3><h4><%= image.description %></h4>">
+                      <img src="/uploads/<%= album.id %>/<%= image.file_name %>" alt="">
+                    </a>
+                  <% }  %>
+                <% })%>
+              </div>
+            <% } %>
+          <% }); %>
         <% } %>
       <% }); %>
   </body>

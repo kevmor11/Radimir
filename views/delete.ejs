@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head %>
+  </head>
+  <body>
+      <!-- Navbar -->
+      <% include ../partials/navbar %>
+
+    <div class="edit">
+      <h2 class="edit-album-title">albums</h2>
+        <% albums.forEach((album, i) => { %>
+          <div class="edit-image">
+            <h4 class="edit-album-title"><%= album.title %></h4>
+            <% images.forEach((image) => { %>
+              <% if(image.album_id === album.id) { %>
+                <img class="edit" src="/uploads/<%= album.id %>/<%= image.file_name %>" alt="">
+                <form action"/edit" method="post" style="display: inline;" onsubmit="return confirm('are you sure you want to delete this image?');">
+                  <button type="submit" class="btn btn-primary delete">X</button>
+                  <input type="hidden" value="<%= image.id %>" name="image_id" />
+                  <input type="hidden" value="<%= image.file_name %>" name="image_filename" />
+                  <input type="hidden" value="<%= album.id %>" name="album_id" />
+                </form>
+              <% }  %>
+            <% })%>
+          </div>
+        <% }); %>
+    </div>
+  </body>
+</html>
