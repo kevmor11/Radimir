@@ -104,11 +104,11 @@ app.post("/logout", (req, res) => {
 });
 
 app.get('/upload', (req, res) => {
-  connection.query('SELECT * FROM albums', (err, rows) => {
+  connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
     if (err) throw err;
 
     if (req.session.user_id) {
-      res.render('upload', { albums: rows });
+      res.render('upload', { albums: albums });
     } else {
       res.redirect('login');
     }
@@ -124,7 +124,6 @@ app.post('/upload', (req, res) => {
   if (!fs.existsSync(`public/uploads/${album}`)) {
     mkdirp(`public/uploads/${album}`, (err) => {
         if (err) console.error(err)
-        else console.log('Directory created successfully!')
     });
   }
 
@@ -144,14 +143,28 @@ app.post('/upload', (req, res) => {
       );
     });
   } else {
-    // TODO else if filename already exists, add an incrementing number onto the end
-    file.mv(`public/uploads/${album}/${file.name}`, (err) => {
+
+    function randomString(len, input) {
+      var charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var randomString = '';
+      for (var i = 0; i < len; i++) {
+        var randomPoz = Math.floor(Math.random() * charSet.length);
+        randomString += charSet.substring(randomPoz,randomPoz+1);
+      }
+      return input + randomString;
+    }
+
+    var newName = randomString(5, file.name);
+
+    // TODO else if filename already exists, add an hash onto the end
+    // TODO use a regex check and .replace() on the filename to be able to append a random hash before the .png or .jpg and then reattach that .png or .jpg onto the end
+    file.mv(`public/uploads/${album}/${newName}`, (err) => {
       if (err) {
         throw err;
         return res.status(500).send(err);
       }
 
-      connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(file.name)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
+      connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(newName + '1')}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
         (err, result) => {
           if (err) throw err;
 
@@ -183,7 +196,7 @@ app.post('/new-album', (req, res) => {
 
 app.get('/cover', (req, res) => {
   if (req.session.user_id) {
-    connection.query('SELECT * FROM albums', (err, albums) => {
+    connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
       if (err) throw err;
 
       connection.query('SELECT * FROM images', (err, images) => {
@@ -219,7 +232,7 @@ app.post('/cover', (req, res) => {
 
 app.get('/delete', (req, res) => {
   if (req.session.user_id) {
-    connection.query('SELECT * FROM albums', (err, albums) => {
+    connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
       if (err) throw err;
 
       connection.query('SELECT * FROM images', (err, images) => {
@@ -235,21 +248,6 @@ app.get('/delete', (req, res) => {
   }
 });
 
-// app.post('/edit', (req, res) => {
-//   const albumID = req.body.album;
-//   const imageID = req.body.cover;
-//   connection.query(`UPDATE images SET cover=0 WHERE album_id=${albumID}`, (err) => {
-//     if (err) throw err;
-//     connection.query(`UPDATE images SET cover=1 WHERE (album_id=${albumID} AND id=${imageID})`, (err) => {
-//       if (err) throw err;
-//       connection.query(`UPDATE albums SET cover=1 WHERE id=${albumID}`, (err) => {
-//         if (err) throw err;
-//         res.redirect('/edit-success');
-//       });
-//     });
-//   });
-// });
-
 app.post('/delete', (req, res) => {
   const imageID = req.body.image_id;
   const fileName = req.body.image_filename;
@@ -258,7 +256,6 @@ app.post('/delete', (req, res) => {
     if (err) throw err;
     covers.forEach((cover, i) => {
       if (cover.id == imageID) {
-        console.log("SUCCESS");
         connection.query(`UPDATE albums SET cover=0 WHERE id=${albumID}`, (err) => {
           if (err) throw err;
         });
@@ -267,11 +264,7 @@ app.post('/delete', (req, res) => {
     connection.query(`DELETE FROM images WHERE ID=${imageID}`, (err) => {
       if (err) throw err;
       fs.unlink(`./public/uploads/${albumID}/${fileName}`, (err) => {
-        if (err) {
-            console.log("failed to delete local image: "+err);
-        } else {
-            console.log('successfully deleted local image');
-        }
+        if (err) throw err;
       });
     });
     res.redirect('delete');

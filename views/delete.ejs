@@ -4,25 +4,24 @@
     <% include ../partials/head %>
   </head>
   <body>
-      <!-- Navbar -->
-      <% include ../partials/navbar %>
-
+    <% include ../partials/navbar %>
     <div class="edit">
       <h2 class="edit-album-title">albums</h2>
+      <small class="edit-album-title">note: if you delete the cover photo, you must choose another cover for the album to be visible</small>
         <% albums.forEach((album, i) => { %>
           <div class="edit-image">
             <h4 class="edit-album-title"><%= album.title %></h4>
             <% images.forEach((image) => { %>
               <% if(image.album_id === album.id) { %>
                 <img class="edit" src="/uploads/<%= album.id %>/<%= image.file_name %>" alt="">
-                <form action"/edit" method="post" style="display: inline;" onsubmit="return confirm('are you sure you want to delete this image?');">
-                  <button type="submit" class="btn btn-primary delete">X</button>
+                <form method="post" style="display: inline;" onsubmit="return confirm('are you sure you want to delete this image?');">
                   <input type="hidden" value="<%= image.id %>" name="image_id" />
                   <input type="hidden" value="<%= image.file_name %>" name="image_filename" />
                   <input type="hidden" value="<%= album.id %>" name="album_id" />
+                  <button type="submit" class="btn btn-primary delete">x</button>
                 </form>
-              <% }  %>
-            <% })%>
+              <% } %>
+            <% }); %>
           </div>
         <% }); %>
     </div>

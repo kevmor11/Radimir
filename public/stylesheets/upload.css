@@ -36,7 +36,9 @@
 }
 
 button.delete {
+  border-radius: 2em;
   display: inline;
+  position: absolute;
 }
 
 .upload-form {
@@ -61,6 +63,7 @@ div.edit-image {
   border: 1px solid lightgrey;
   border-radius: 5px;
   margin: 1% 15%;
+  padding: 1em;
 }
 
 h2.edit-album-title {
@@ -69,11 +72,17 @@ h2.edit-album-title {
 
 h4.edit-album-title {
   margin-left: 44%;
+  padding-bottom: 1em;
+}
+
+small.edit-album-title {
+  margin-left: 33%;
 }
 
 img.edit {
+  border-radius: 3px;
   display: inline;
-  margin: .5em;
+  margin-left: 1em;
   width: 10em;
 }
 
