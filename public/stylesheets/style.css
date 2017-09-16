@@ -12,16 +12,28 @@ div.container {
   margin-top: 7em;
 }
 
+a.cover-link {
+  display: inline-block;
+}
+
 div.album-cover {
   /* background-color: black; */
-  /* border: 1.4px solid lightgray; */
-  height: 22em;
+  border: 1.4px solid lightgray;
+  height: 18em;
   width: 25em;
   margin: 2em 3em;
-  display: inline-block;
-  border-radius: 4px;
-  padding: 1.7px;
-  padding-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+img.cover-image {
+  /* min-height:  100%; */
+  max-width:  100%;
+  border-radius: 2px;
+  margin: auto;
+  position: absolute;
+  top: 0; right: -50%; bottom: 0; left: -50%;
+  /* overflow: visible; */
 }
 
 div.lg-cover {
@@ -39,17 +51,6 @@ h4.title {
 html, body {
   max-width: 100%;
   overflow-x: hidden;
-}
-
-img.cover-image {
-  position: relative;
-  float: left;
-  width:  100%;
-  background-position: 50% 50%;
-  background-repeat:   no-repeat;
-  background-size:     cover;
-  /* height: 100%; */
-  border-radius: 2px;
 }
 
 body {
@@ -82,7 +83,7 @@ header {
   position: fixed;
   top: 4%;
   z-index: 9999;
- }
+}
 
 .rvd {
   font-family: 'AUdimat-Regular';

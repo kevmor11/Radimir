@@ -34,11 +34,11 @@
           <% covers.forEach((cover, ii) => { %>
             <% if(cover.album_id == album.id) { %>
               <div id="lightgallery-<%= i %>" class="lg-cover">
-                <a href="/uploads/<%= album.id %>/<%= cover.file_name %>" data-sub-html="<h3><%= cover.title %></h3><h4><%= cover.description %></h4>">
+                <a class="cover-link" href="/uploads/<%= album.id %>/<%= cover.file_name %>" data-sub-html="<h3><%= cover.title %></h3><h4><%= cover.description %></h4>">
                   <div class="album-cover">
                     <img class="cover-image" src="/uploads/<%= album.id %>/<%= cover.file_name %>" alt="">
-                    <h4 class="title"><%= album.title %></h4>
                   </div>
+                  <h4 class="title"><%= album.title %></h4>
                 </a>
                 <% images.forEach((image) => { %>
                   <% if(image.album_id === album.id && image.file_name !== cover.file_name && images.length > 0) { %>
