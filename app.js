@@ -1,20 +1,20 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mysql = require('mysql');
-var cookieSession = require("cookie-session");
-var bcrypt = require('bcrypt');
-var fileUpload = require('express-fileupload');
-var mkdirp = require('mkdirp');
-var fs = require('fs');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const mysql = require('mysql');
+const cookieSession = require("cookie-session");
+const bcrypt = require('bcrypt');
+const fileUpload = require('express-fileupload');
+const mkdirp = require('mkdirp');
+const fs = require('fs');
 require('dotenv').config();
 
-var app = express();
+const app = express();
 
-var connection = mysql.createConnection({
+const connection = mysql.createConnection({
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
@@ -72,11 +72,11 @@ app.get("/login", (req, res) => {
 
 app.post("/login", (req, res) => {
 
-  var query = connection.query('SELECT username, password FROM admins WHERE id = 1', (err, rows) => {
+  connection.query('SELECT username, password FROM admins WHERE id = 1', (err, rows) => {
     if (err) throw err;
 
-    var queryUsername = rows[0].username;
-    var queryPassword = rows[0].password;
+    const queryUsername = rows[0].username;
+    const queryPassword = rows[0].password;
 
     function authenticated(username, password) {
       if (queryUsername === username && bcrypt.compareSync(password, queryPassword, 10)) {
@@ -120,6 +120,8 @@ app.post('/upload', (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
   const file = req.files.image;
+  const fileName = file.name;
+
 
   if (!fs.existsSync(`public/uploads/${album}`)) {
     mkdirp(`public/uploads/${album}`, (err) => {
@@ -127,47 +129,45 @@ app.post('/upload', (req, res) => {
     });
   }
 
-  // Use the mv() method to place the file somewhere on your server
-  if (!fs.existsSync(`public/uploads/${album}/${file.name}`)) {
-    file.mv(`public/uploads/${album}/${file.name}`, (err) => {
+  // Use the mv() method to place the file somewhere on your server if it doesn't already exist
+  if (!fs.existsSync(`public/uploads/${album}/${fileName}`)) {
+    file.mv(`public/uploads/${album}/${fileName}`, (err) => {
       if (err) {
         throw err;
         return res.status(500).send(err);
       }
 
-      connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(file.name)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
+      connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(fileName)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
         (err, result) => {
           if (err) throw err;
           res.redirect('/success');
         }
       );
     });
+    // else if file name already exists, append a hash at the end before the file format
   } else {
 
-    function randomString(len, input) {
-      var charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      var randomString = '';
-      for (var i = 0; i < len; i++) {
-        var randomPoz = Math.floor(Math.random() * charSet.length);
+    function randomString(len) {
+      const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let randomString = '';
+      for (let i = 0; i < len; i++) {
+        const randomPoz = Math.floor(Math.random() * charSet.length);
         randomString += charSet.substring(randomPoz,randomPoz+1);
       }
-      return input + randomString;
+      return randomString;
     }
 
-    var newName = randomString(5, file.name);
+    const index = fileName.lastIndexOf(".");  // Gets the last index where a period occours
+    const newName = [fileName.slice(0, index), randomString(5), fileName.slice(index)].join('');
 
-    // TODO else if filename already exists, add an hash onto the end
-    // TODO use a regex check and .replace() on the filename to be able to append a random hash before the .png or .jpg and then reattach that .png or .jpg onto the end
     file.mv(`public/uploads/${album}/${newName}`, (err) => {
       if (err) {
         throw err;
         return res.status(500).send(err);
       }
-
-      connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(newName + '1')}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
+      connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(newName)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
         (err, result) => {
           if (err) throw err;
-
           res.redirect('/success');
         }
       );
@@ -281,7 +281,7 @@ app.get('/cover-success', (req, res) => {
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  var err = new Error('Not Found');
+  let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });

@@ -24,7 +24,8 @@
           <select class="form-control" name="cover" required >
             <option disabled selected value> -- select a cover image -- </option>
             <!-- TODO figure out AJAX call so as to rerender second select tag based on first selection -->
-            <% var slctdAlbumID = 19; %>
+            <!-- TODO instead of this method, create a custom right-click with an option to that image as a cover photo as well as to delete a photo so it can share the same page as /delete -->
+            <% let slctdAlbumID = 19; %>
             <script>
               $( "#album-select" ).change(() => {
                 slctdAlbumID = $('#album-select option:selected').val();

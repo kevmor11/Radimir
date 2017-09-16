@@ -131,3 +131,5 @@ header {
 .email:hover ~ .not-email {
   opacity: .5;
 }
+
+/* TODO get cover images to fill divs horizontally and have vertical overflow be hidden */
