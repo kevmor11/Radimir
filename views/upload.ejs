@@ -17,7 +17,6 @@
           <label for="title">album: *</label>
           <select class="form-control" name="album" required >
             <option disabled selected value> -- select an album -- </option>
-             <!-- For each album, render an <option> tag for the dropdown  -->
             <% albums.forEach((album, i) => { %>
               <option value="<%= album.id %>"><%= album.title %></option>
             <% }); %>

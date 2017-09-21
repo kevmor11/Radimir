@@ -3,7 +3,11 @@ body.home {
 }
 
 p a {
-  z-index: 1;
+  z-index: 1 !important;
+}
+
+div {
+  z-index: 2 !important;
 }
 
 div.container {
@@ -16,8 +20,10 @@ a.cover-link {
   display: inline-block;
 }
 
+/* TODO use JS to analyze the height of the images and apply certain CSS based on whether its a landscape or portait image */
+/* Portrait images next max-width: 100% while landscape images need max-height: 100% */
+
 div.album-cover {
-  /* background-color: black; */
   border: 1.4px solid lightgray;
   height: 18em;
   width: 25em;
@@ -26,14 +32,22 @@ div.album-cover {
   overflow: hidden;
 }
 
-img.cover-image {
-  /* min-height:  100%; */
+img.portrait {
   max-width:  100%;
   border-radius: 2px;
+  border: 1px solid black;
   margin: auto;
   position: absolute;
   top: 0; right: -50%; bottom: 0; left: -50%;
-  /* overflow: visible; */
+}
+
+img.landscape {
+  max-height:  100%;
+  border-radius: 2px;
+  border: 1px solid black;
+  margin: auto;
+  position: absolute;
+  top: 0; right: -50%; bottom: 0; left: -50%;
 }
 
 div.lg-cover {
@@ -82,7 +96,6 @@ header {
   overflow: hidden;
   position: fixed;
   top: 4%;
-  z-index: 9999;
 }
 
 .rvd {
@@ -104,6 +117,7 @@ header {
   background-color: white;
   width: 100%;
   z-index: 9998;
+
 }
 
 @font-face {
@@ -132,5 +146,3 @@ header {
 .email:hover ~ .not-email {
   opacity: .5;
 }
-
-/* TODO get cover images to fill divs horizontally and have vertical overflow be hidden */

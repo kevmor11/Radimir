@@ -36,7 +36,7 @@
               <div id="lightgallery-<%= i %>" class="lg-cover">
                 <a class="cover-link" href="/uploads/<%= album.id %>/<%= cover.file_name %>" data-sub-html="<h3><%= cover.title %></h3><h4><%= cover.description %></h4>">
                   <div class="album-cover">
-                    <img class="cover-image" src="/uploads/<%= album.id %>/<%= cover.file_name %>" alt="">
+                    <img class="cover-image-<%= i %>" src="/uploads/<%= album.id %>/<%= cover.file_name %>" alt="">
                   </div>
                   <h4 class="title"><%= album.title %></h4>
                 </a>
@@ -51,6 +51,15 @@
             <% } %>
           <% }); %>
         <% } %>
+        <script>
+          console.log("WIDTH-<%= i   %>", $('.cover-image-<%= i %>').width());
+          console.log("HEIGHT-<%= i %>", $('.cover-image-<%= i %>').height());
+          if($('.cover-image-<%= i %>').width() > $('.cover-image-<%= i %>').height()) {
+            $('.cover-image-<%= i %>').addClass('landscape');
+          } else {
+            $('.cover-image-<%= i %>').addClass('portrait');
+          }
+        </script>
       <% }); %>
   </body>
 </html>

@@ -1,16 +1,19 @@
-const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const mysql = require('mysql');
-const cookieSession = require("cookie-session");
-const bcrypt = require('bcrypt');
-const fileUpload = require('express-fileupload');
-const mkdirp = require('mkdirp');
-const fs = require('fs');
+const express = require('express'),
+      path = require('path'),
+      favicon = require('serve-favicon'),
+      logger = require('morgan'),
+      cookieParser = require('cookie-parser'),
+      bodyParser = require('body-parser'),
+      mysql = require('mysql'),
+      cookieSession = require("cookie-session"),
+      bcrypt = require('bcrypt'),
+      fileUpload = require('express-fileupload'),
+      mkdirp = require('mkdirp'),
+      fs = require('fs');
+
 require('dotenv').config();
+
+// TODO seperate routes
 
 const app = express();
 
@@ -43,7 +46,7 @@ app.use(cookieSession({
                       }));
 app.use(fileUpload());
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
     if (err) throw err;
     connection.query('SELECT * FROM images', (err, images) => {
@@ -72,11 +75,11 @@ app.get("/login", (req, res) => {
 
 app.post("/login", (req, res) => {
 
-  connection.query('SELECT username, password FROM admins WHERE id = 1', (err, rows) => {
+  connection.query('SELECT username, password FROM admins WHERE id = 1', (err, result) => {
     if (err) throw err;
 
-    const queryUsername = rows[0].username;
-    const queryPassword = rows[0].password;
+    const queryUsername = result[0].username,
+          queryPassword = result[0].password;
 
     function authenticated(username, password) {
       if (queryUsername === username && bcrypt.compareSync(password, queryPassword, 10)) {
@@ -94,7 +97,6 @@ app.post("/login", (req, res) => {
       res.status(403).send("Woops, try again.<br><a href='/login'>Login</a>");
     }
   });
-
 });
 
 app.post("/logout", (req, res) => {
@@ -116,12 +118,11 @@ app.get('/upload', (req, res) => {
 });
 
 app.post('/upload', (req, res) => {
-  const album = req.body.album;
-  const title = req.body.title;
-  const description = req.body.description;
-  const file = req.files.image;
-  const fileName = file.name;
-
+  const album = req.body.album,
+        title = req.body.title,
+        description = req.body.description,
+        file = req.files.image,
+        fileName = file.name;
 
   if (!fs.existsSync(`public/uploads/${album}`)) {
     mkdirp(`public/uploads/${album}`, (err) => {
@@ -132,13 +133,10 @@ app.post('/upload', (req, res) => {
   // Use the mv() method to place the file somewhere on your server if it doesn't already exist
   if (!fs.existsSync(`public/uploads/${album}/${fileName}`)) {
     file.mv(`public/uploads/${album}/${fileName}`, (err) => {
-      if (err) {
-        throw err;
-        return res.status(500).send(err);
-      }
+      if (err) throw err;
 
       connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(fileName)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
-        (err, result) => {
+        (err) => {
           if (err) throw err;
           res.redirect('/success');
         }
@@ -157,16 +155,14 @@ app.post('/upload', (req, res) => {
       return randomString;
     }
 
-    const index = fileName.lastIndexOf(".");  // Gets the last index where a period occours
-    const newName = [fileName.slice(0, index), randomString(5), fileName.slice(index)].join('');
+    const index = fileName.lastIndexOf("."),  // Gets the last index where a period occours
+          newName = [fileName.slice(0, index), randomString(5), fileName.slice(index)].join('');
 
     file.mv(`public/uploads/${album}/${newName}`, (err) => {
-      if (err) {
-        throw err;
-        return res.status(500).send(err);
-      }
+      if (err) throw err;
+
       connection.query(`INSERT INTO images (file_name, title, description, cover, album_id) VALUES (${mysql.escape(newName)}, ${mysql.escape(title)}, ${mysql.escape(description)}, 0, ${mysql.escape(album)})`,
-        (err, result) => {
+        (err) => {
           if (err) throw err;
           res.redirect('/success');
         }
@@ -184,8 +180,8 @@ app.get('/new-album', (req, res) => {
 });
 
 app.post('/new-album', (req, res) => {
-  const title = req.body.title;
-  const description = req.body.description;
+  const title = req.body.title,
+        description = req.body.description;
     connection.query(`INSERT INTO albums (title, description, cover) VALUES (${mysql.escape(title)}, ${mysql.escape(description)}, 0)`,
       (err) => {
         if (err) throw err;
@@ -213,8 +209,8 @@ app.get('/cover', (req, res) => {
 });
 
 app.post('/cover', (req, res) => {
-  const albumID = req.body.album;
-  const imageID = req.body.cover;
+  const albumID = req.body.album,
+        imageID = req.body.cover;
   connection.query(`UPDATE images SET cover=0 WHERE album_id=${albumID}`, (err) => {
     if (err) throw err;
     connection.query(`UPDATE images SET cover=1 WHERE (album_id=${albumID} AND id=${imageID})`, (err) => {
@@ -249,9 +245,9 @@ app.get('/delete', (req, res) => {
 });
 
 app.post('/delete', (req, res) => {
-  const imageID = req.body.image_id;
-  const fileName = req.body.image_filename;
-  const albumID = req.body.album_id;
+  const imageID = req.body.image_id,
+        fileName = req.body.image_filename,
+        albumID = req.body.album_id;
   connection.query('SELECT id FROM images WHERE cover=1', (err, covers) => {
     if (err) throw err;
     covers.forEach((cover, i) => {
