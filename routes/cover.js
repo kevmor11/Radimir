@@ -1,15 +1,14 @@
-const express = require('express'),
-      router = express.Router(),
-      mysql = require('mysql');
-
 require('dotenv').load();
 
-const connection = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME
-});
+const express = require('express'),
+      router = express.Router(),
+      mysql = require('mysql'),
+      connection = mysql.createConnection({
+        host: process.env.DATABASE_HOST,
+        user: process.env.DATABASE_USER,
+        password: process.env.DATABASE_PASSWORD,
+        database: process.env.DATABASE_NAME
+      });
 
 router.get('/', (req, res) => {
   if (req.session.user_id) {

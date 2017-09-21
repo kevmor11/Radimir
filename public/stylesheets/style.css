@@ -16,12 +16,10 @@ div.container {
   margin-top: 7em;
 }
 
+/* VERSION 1 of a tag and div styling */
 a.cover-link {
   display: inline-block;
 }
-
-/* TODO use JS to analyze the height of the images and apply certain CSS based on whether its a landscape or portait image */
-/* Portrait images next max-width: 100% while landscape images need max-height: 100% */
 
 div.album-cover {
   border: 1.4px solid lightgray;
@@ -31,6 +29,25 @@ div.album-cover {
   position: relative;
   overflow: hidden;
 }
+
+/* VERSION 2 of a tag and div styling */
+/* a.cover-link {
+  display: inline-block;
+  height: 18em;
+  width: 25em;
+  margin: 2em 3em;
+}
+
+div.album-cover {
+  border: 1.4px solid lightgray;
+  height: 18em;
+  width: 25em;
+  position: relative;
+  overflow: hidden;
+} */
+
+/* TODO use JS to analyze the height of the images and apply certain CSS based on whether its a landscape or portait image */
+/* Portrait images next max-width: 100% while landscape images need max-height: 100% */
 
 img.portrait {
   max-width:  100%;

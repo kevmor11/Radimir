@@ -33,21 +33,21 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieSession({
-                        name: 'session',
-                        keys: ['user_id'],
-                        // Cookie Options (session cookies expire after 24 hours)
-                        maxAge: 24 * 60 * 60 * 1000 // 24 hours
-                      }));
+  name: 'session',
+  keys: ['user_id'],
+  // Cookie Options (session cookies expire after 24 hours)
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
 app.use(fileUpload());
 
 app.use('/', index);
 app.use('/login', login);
 app.use('/logout', logout);
+app.use('/new-album', newAlbum);
+app.use('/upload', upload);
 app.use('/cover', cover);
 app.use('/delete', deleteImage);
 app.use('/success', success);
-app.use('/new-album', newAlbum);
-app.use('/upload', upload);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

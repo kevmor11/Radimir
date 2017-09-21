@@ -1,17 +1,16 @@
+require('dotenv').load();
+
 const express = require('express'),
       router = express.Router(),
       mysql = require('mysql'),
       mkdirp = require('mkdirp'),
-      fs = require('fs');
-
-require('dotenv').load();
-
-const connection = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME
-});
+      fs = require('fs'),
+      connection = mysql.createConnection({
+        host: process.env.DATABASE_HOST,
+        user: process.env.DATABASE_USER,
+        password: process.env.DATABASE_PASSWORD,
+        database: process.env.DATABASE_NAME
+      });
 
 router.get('/', (req, res) => {
   connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
