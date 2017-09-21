@@ -4,6 +4,8 @@ const express = require('express'),
       mkdirp = require('mkdirp'),
       fs = require('fs');
 
+require('dotenv').load();
+
 const connection = mysql.createConnection({
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,
@@ -11,7 +13,7 @@ const connection = mysql.createConnection({
   database: process.env.DATABASE_NAME
 });
 
-router.get('/upload', (req, res) => {
+router.get('/', (req, res) => {
   connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
     if (err) throw err;
 
@@ -23,7 +25,7 @@ router.get('/upload', (req, res) => {
   });
 });
 
-router.post('/upload', (req, res) => {
+router.post('/', (req, res) => {
   const album = req.body.album,
         title = req.body.title,
         description = req.body.description,

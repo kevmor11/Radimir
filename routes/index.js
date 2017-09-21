@@ -2,6 +2,8 @@ const express = require('express'),
       router = express.Router(),
       mysql = require('mysql');
 
+require('dotenv').load();
+
 const connection = mysql.createConnection({
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,

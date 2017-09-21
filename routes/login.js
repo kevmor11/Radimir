@@ -1,7 +1,9 @@
 const express = require('express'),
-  router = express.Router(),
-  bcrypt = require('bcrypt'),
-  mysql = require('mysql');
+      router = express.Router(),
+      bcrypt = require('bcrypt'),
+      mysql = require('mysql');
+
+require('dotenv').load();
 
 const connection = mysql.createConnection({
   host: process.env.DATABASE_HOST,
@@ -10,7 +12,7 @@ const connection = mysql.createConnection({
   database: process.env.DATABASE_NAME
 });
 
-router.get("/login", (req, res) => {
+router.get("/", (req, res) => {
   if (req.session.user_id) {
     res.redirect("/upload");
   } else {
@@ -20,7 +22,7 @@ router.get("/login", (req, res) => {
   }
 });
 
-router.post("/login", (req, res) => {
+router.post("/", (req, res) => {
     connection.query('SELECT username, password FROM admins WHERE id = 1', (err, result) => {
       if (err) throw err;
 

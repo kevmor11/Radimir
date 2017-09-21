@@ -1,15 +1,17 @@
 const express = require('express'),
-router = express.Router(),
-mysql = require('mysql');
+      router = express.Router(),
+      mysql = require('mysql');
+
+require('dotenv').load();
 
 const connection = mysql.createConnection({
-host: process.env.DATABASE_HOST,
-user: process.env.DATABASE_USER,
-password: process.env.DATABASE_PASSWORD,
-database: process.env.DATABASE_NAME
+  host: process.env.DATABASE_HOST,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME
 });
 
-router.get('/cover', (req, res) => {
+router.get('/', (req, res) => {
   if (req.session.user_id) {
     connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
       if (err) throw err;
@@ -27,7 +29,7 @@ router.get('/cover', (req, res) => {
   }
 });
 
-router.post('/cover', (req, res) => {
+router.post('/', (req, res) => {
   const albumID = req.body.album,
         imageID = req.body.cover;
   connection.query(`UPDATE images SET cover=0 WHERE album_id=${albumID}`, (err) => {

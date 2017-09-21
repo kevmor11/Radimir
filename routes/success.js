@@ -1,7 +1,7 @@
 const express = require('express'),
-router = express.Router();
+      router = express.Router();
 
-router.get('/success', (req, res) => {
+router.get('/', (req, res) => {
   res.render('success');
 });
 

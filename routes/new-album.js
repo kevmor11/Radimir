@@ -2,6 +2,8 @@ const express = require('express'),
       router = express.Router(),
       mysql = require('mysql');
 
+require('dotenv').load();
+
 const connection = mysql.createConnection({
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,
@@ -9,7 +11,7 @@ const connection = mysql.createConnection({
   database: process.env.DATABASE_NAME
 });
 
-router.get('/new-album', (req, res) => {
+router.get('/', (req, res) => {
   if (req.session.user_id) {
     res.render('new-album');
   } else {
@@ -17,7 +19,7 @@ router.get('/new-album', (req, res) => {
   }
 });
 
-router.post('/new-album', (req, res) => {
+router.post('/', (req, res) => {
   const title = req.body.title,
         description = req.body.description;
     connection.query(`INSERT INTO albums (title, description, cover) VALUES (${mysql.escape(title)}, ${mysql.escape(description)}, 0)`,

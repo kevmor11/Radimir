@@ -3,6 +3,7 @@ const express = require('express'),
       mysql = require('mysql'),
       fs = require('fs');
 
+require('dotenv').load();
 
 const connection = mysql.createConnection({
   host: process.env.DATABASE_HOST,
@@ -11,7 +12,7 @@ const connection = mysql.createConnection({
   database: process.env.DATABASE_NAME
 });
 
-router.get('/delete', (req, res) => {
+router.get('/', (req, res) => {
   if (req.session.user_id) {
     connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
       if (err) throw err;
@@ -29,7 +30,7 @@ router.get('/delete', (req, res) => {
   }
 });
 
-router.post('/delete', (req, res) => {
+router.post('/', (req, res) => {
   const imageID = req.body.image_id,
         fileName = req.body.image_filename,
         albumID = req.body.album_id;

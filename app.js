@@ -7,14 +7,11 @@ const express = require('express'),
       cookieSession = require("cookie-session"),
       fileUpload = require('express-fileupload');
 
-require('dotenv').config();
-
 const index = require('./routes/index'),
       login = require('./routes/login'),
       logout = require('./routes/logout'),
       cover = require('./routes/cover'),
       deleteImage = require('./routes/delete'),
-      error = require('./routes/error'),
       newAlbum = require('./routes/new-album'),
       success = require('./routes/success'),
       upload = require('./routes/upload');
@@ -48,7 +45,6 @@ app.use('/login', login);
 app.use('/logout', logout);
 app.use('/cover', cover);
 app.use('/delete', deleteImage);
-app.use('/error', error);
 app.use('/success', success);
 app.use('/new-album', newAlbum);
 app.use('/upload', upload);
