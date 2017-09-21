@@ -1,7 +1,6 @@
 require('dotenv').load();
 
 const express = require('express'),
-      router = express.Router(),
       mysql = require('mysql'),
       mkdirp = require('mkdirp'),
       fs = require('fs'),
@@ -10,9 +9,10 @@ const express = require('express'),
         user: process.env.DATABASE_USER,
         password: process.env.DATABASE_PASSWORD,
         database: process.env.DATABASE_NAME
-      });
+      }),
+      router = express.Router()
 
-router.get('/', (req, res) => {
+.get('/', (req, res) => {
   connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
     if (err) throw err;
 
@@ -22,9 +22,9 @@ router.get('/', (req, res) => {
       res.redirect('login');
     }
   });
-});
+})
 
-router.post('/', (req, res) => {
+.post('/', (req, res) => {
   const album = req.body.album,
         title = req.body.title,
         description = req.body.description,

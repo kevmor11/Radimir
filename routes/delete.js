@@ -1,7 +1,6 @@
 require('dotenv').load();
 
 const express = require('express'),
-      router = express.Router(),
       mysql = require('mysql'),
       fs = require('fs'),
       connection = mysql.createConnection({
@@ -9,9 +8,10 @@ const express = require('express'),
         user: process.env.DATABASE_USER,
         password: process.env.DATABASE_PASSWORD,
         database: process.env.DATABASE_NAME
-      });
+      }),
+      router = express.Router()
 
-router.get('/', (req, res) => {
+.get('/', (req, res) => {
   if (req.session.user_id) {
     connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
       if (err) throw err;
@@ -27,9 +27,9 @@ router.get('/', (req, res) => {
   } else {
     res.redirect('login');
   }
-});
+})
 
-router.post('/', (req, res) => {
+.post('/', (req, res) => {
   const imageID = req.body.image_id,
         fileName = req.body.image_filename,
         albumID = req.body.album_id;

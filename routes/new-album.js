@@ -1,24 +1,24 @@
 require('dotenv').load();
 
 const express = require('express'),
-      router = express.Router(),
       mysql = require('mysql'),
       connection = mysql.createConnection({
         host: process.env.DATABASE_HOST,
         user: process.env.DATABASE_USER,
         password: process.env.DATABASE_PASSWORD,
         database: process.env.DATABASE_NAME
-      });
+      }),
+      router = express.Router()
 
-router.get('/', (req, res) => {
+.get('/', (req, res) => {
   if (req.session.user_id) {
     res.render('new-album');
   } else {
     res.redirect('login');
   }
-});
+})
 
-router.post('/', (req, res) => {
+.post('/', (req, res) => {
   const title = req.body.title,
         description = req.body.description;
     connection.query(`INSERT INTO albums (title, description, cover) VALUES (${mysql.escape(title)}, ${mysql.escape(description)}, 0)`,
