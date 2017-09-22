@@ -3,7 +3,7 @@
   <head>
     <% include ../partials/head %>
   </head>
-  <!-- TODO show a loading screen until document.ready and img files preloaded and when ready, play an animation or gif that plays once as a transition animation and then fades out and fades into the website -->
+  <!-- TODO show a loading screen until $(window).load() and img files preloaded and when ready, play an animation or gif that plays once as a transition animation and then fades out and fades into the website -->
   <body class="home" oncontextmenu="return false">
     <header class="header">
       <div class"social-header">
@@ -52,13 +52,13 @@
           <% }); %>
         <% } %>
         <script>
-          console.log("WIDTH-<%= i   %>", $('.cover-image-<%= i %>').width());
-          console.log("HEIGHT-<%= i %>", $('.cover-image-<%= i %>').height());
-          if($('.cover-image-<%= i %>').width() > $('.cover-image-<%= i %>').height()) {
-            $('.cover-image-<%= i %>').addClass('landscape');
-          } else {
-            $('.cover-image-<%= i %>').addClass('portrait');
-          }
+          $(window).load(() => {
+            if($('.cover-image-<%= i %>').width() > $('.cover-image-<%= i %>').height()) {
+              $('.cover-image-<%= i %>').addClass('landscape');
+            } else {
+              $('.cover-image-<%= i %>').addClass('portrait');
+            }
+          })
         </script>
       <% }); %>
   </body>

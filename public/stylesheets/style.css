@@ -148,6 +148,10 @@ header {
 }
 
 /* TODO figure out why the navbar hover on the homepage isnt working */
+/* .facebook:hover ~ .not-facebook {
+  opacity: .5;
+} */
+
 .facebook:hover ~ .not-facebook {
   opacity: .5;
 }
