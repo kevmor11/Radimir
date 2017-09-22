@@ -61,5 +61,40 @@
           })
         </script>
       <% }); %>
+    <script>
+      $('.instagram').hover(() => {
+        $('.not-instagram').css('transition', 'opacity .2s ease-in');
+        $('.not-instagram').css('opacity', 0.5);
+      });
+      $('.facebook').hover(() => {
+        $('.not-facebook').css('transition', 'opacity .2s ease-in');
+        $('.not-facebook').css('opacity', 0.5);
+      });
+      $('.email').hover(() => {
+        $('.not-email').css('transition', 'opacity .2s ease-in');
+        $('.not-email').css('opacity', 0.5);
+      });
+      $('.twitter').hover(() => {
+        $('.not-twitter').css('transition', 'opacity .2s ease-in');
+        $('.not-twitter').css('opacity', 0.5);
+      });
+
+      $('.instagram').mouseleave(() => {
+        $('.not-instagram').css('transition', 'opacity .2s ease-in');
+        $('.not-instagram').css('opacity', 1);
+      });
+      $('.facebook').mouseleave(() => {
+        $('.not-facebook').css('transition', 'opacity .2s ease-in');
+        $('.not-facebook').css('opacity', 1);
+      });
+      $('.email').mouseleave(() => {
+        $('.not-email').css('transition', 'opacity .2s ease-in');
+        $('.not-email').css('opacity', 1);
+      });
+      $('.twitter').mouseleave(() => {
+        $('.not-twitter').css('transition', 'opacity .2s ease-in');
+        $('.not-twitter').css('opacity', 1);
+      });
+    </script>
   </body>
 </html>

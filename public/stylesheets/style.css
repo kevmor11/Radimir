@@ -146,24 +146,3 @@ header {
     font-weight: normal;
     font-style: normal;
 }
-
-/* TODO figure out why the navbar hover on the homepage isnt working */
-/* .facebook:hover ~ .not-facebook {
-  opacity: .5;
-} */
-
-.facebook:hover ~ .not-facebook {
-  opacity: .5;
-}
-
-.instagram:hover ~ .not-instagram {
-  opacity: .5;
-}
-
-.twitter:hover ~ .not-twitter {
-  opacity: .5;
-}
-
-.email:hover ~ .not-email {
-  opacity: .5;
-}
