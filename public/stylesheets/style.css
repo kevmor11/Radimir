@@ -16,13 +16,13 @@ div.container {
   margin-top: 7em;
 }
 
+/* TODO figure out a tag sizing */
 /* VERSION 1 of a tag and div styling */
 a.cover-link {
   display: inline-block;
 }
 
 div.album-cover {
-  border: 1.4px solid lightgray;
   height: 18em;
   width: 25em;
   margin: 2em 3em;
@@ -46,20 +46,16 @@ div.album-cover {
   overflow: hidden;
 } */
 
-/* TODO use JS to analyze the height of the images and apply certain CSS based on whether its a landscape or portait image */
-/* Portrait images next max-width: 100% while landscape images need max-height: 100% */
-
 img.portrait {
-  max-width:  100%;
+  width:  100%;
   border-radius: 2px;
-  border: 1px solid black;
   margin: auto;
   position: absolute;
   top: 0; right: -50%; bottom: 0; left: -50%;
 }
 
 img.landscape {
-  max-height:  100%;
+  height:  100%;
   border-radius: 2px;
   border: 1px solid black;
   margin: auto;
