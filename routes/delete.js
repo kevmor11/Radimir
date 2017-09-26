@@ -50,6 +50,34 @@ const express = require('express'),
     });
     res.redirect('delete');
   });
+})
+
+.post('/album', (req, res) => {
+  const albumID = req.body.album_id;
+  connection.query(`DELETE FROM images WHERE album_id=${albumID}`, (err) => {
+    if (err) throw err;
+    connection.query(`DELETE FROM albums WHERE ID=${albumID}`, (err) => {
+      if (err) throw err;
+      if (fs.existsSync(`public/uploads/${albumID}`)) {
+        deleteFolderRecursive(`public/uploads/${albumID}`);
+      }
+      res.redirect('/delete');
+    });
+  });
 });
+
+var deleteFolderRecursive = function(path) {
+  if( fs.existsSync(path) ) {
+    fs.readdirSync(path).forEach(function(file){
+      var curPath = path + "/" + file;
+      if(fs.lstatSync(curPath).isDirectory()) { // recurse
+        deleteFolderRecursive(curPath);
+      } else { // delete file
+        fs.unlinkSync(curPath);
+      }
+    });
+    fs.rmdirSync(path);
+  }
+};
 
 module.exports = router;
