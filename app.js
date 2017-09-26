@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require('express'),
       path = require('path'),
       favicon = require('serve-favicon'),
@@ -25,7 +27,7 @@ const express = require('express'),
 
 // uncomment after placing your favicon in /public
 // TODO get Rad to design a Favicon
-  //  .use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+   .use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
    .use(logger('dev'))
    .use(bodyParser.json())
    .use(bodyParser.urlencoded({
