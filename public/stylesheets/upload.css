@@ -31,14 +31,30 @@
   color: black;
 }
 
- #navbar ul li a:hover {
+#navbar ul li a:hover {
   color: #2f6fd6;
 }
 
 button.delete {
-  border-radius: 2em;
-  display: inline;
+  border-radius: .2em;
+  margin-left: -2.65em;
+  position: relative;
+  vertical-align: top;
+}
+
+button.delete:hover {
+  background-color: red;
+}
+
+button.delete-album {
+  border-radius: .2em;
+  margin-top: -1em;
+  margin-left: 67.8em;
   position: absolute;
+}
+
+button.delete-album:hover {
+  background-color: red;
 }
 
 .upload-form {
@@ -83,6 +99,7 @@ img.edit {
   border-radius: 3px;
   display: inline;
   margin-left: 1em;
+  position: relative;
   width: 10em;
 }
 

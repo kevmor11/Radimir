@@ -9,11 +9,11 @@
       <h2 class="edit-album-title">albums</h2>
       <small class="edit-album-title">note: if you delete the cover photo, you must choose another cover for the album to be visible</small>
         <% albums.forEach((album, i) => { %>
-          <form method="post" action="/delete/album" style="display: inline;" onsubmit="return confirm('are you sure you want to delete this album and its images?');">
-            <input type="hidden" value="<%= album.id %>" name="album_id" />
-            <button type="submit" class="btn btn-primary delete">x</button>
-          </form>
           <div class="edit-image">
+            <form method="post" action="/delete/album" style="display: inline;" onsubmit="return confirm('are you sure you want to delete this album and its images?');">
+              <input type="hidden" value="<%= album.id %>" name="album_id" />
+              <button type="submit" class="btn btn-primary delete-album">x</button>
+            </form>
             <h4 class="edit-album-title"><%= album.title %></h4>
             <% images.forEach((image) => { %>
               <% if(image.album_id === album.id) { %>
