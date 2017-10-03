@@ -14,6 +14,7 @@ const express = require('express'),
       login = require('./routes/login'),
       logout = require('./routes/logout'),
       cover = require('./routes/cover'),
+      coverSuccess = require('./routes/cover-success'),
       deleteImage = require('./routes/delete'),
       newAlbum = require('./routes/new-album'),
       success = require('./routes/success'),
@@ -49,6 +50,7 @@ const express = require('express'),
    .use('/new-album', newAlbum)
    .use('/upload', upload)
    .use('/cover', cover)
+   .use('/cover-success', coverSuccess)
    .use('/delete', deleteImage)
    .use('/success', success)
 
