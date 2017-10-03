@@ -5,6 +5,9 @@
   </head>
   <body>
     <% include ../partials/navbar %>
+    <script type='text/javascript'>
+    var albumImages = <%- JSON.stringify(images) %>;
+    </script>
     <div class="upload-form">
       <form action="/cover" method="post" enctype="multipart/form-data">
         <h3 class="form-title">choose album cover</h3>
@@ -21,23 +24,25 @@
         </div>
         <div class="form-group">
           <label for="title">cover image: (title - file name)</label>
-          <select class="form-control" name="cover" required >
-            <option disabled selected value> -- select a cover image -- </option>
+          <select id='image-select' class="form-control" name="cover" required >
+            <option disabled selected> -- select a cover image -- </option>
             <!-- TODO figure out AJAX call so as to rerender second select tag based on first selection -->
             <!-- TODO instead of this method, create a custom right-click with an option to that image as a cover photo as well as to delete a photo so it can share the same page as /delete -->
-            <% let slctdAlbumID = 19; %>
-            <script>
-              $( "#album-select" ).change(() => {
-                slctdAlbumID = $('#album-select option:selected').val();
-                console.log("ID", slctdAlbumID);
-              });
-            </script>
-            <% images.filter((image) => image.album_id === 22).forEach((image, i) => { %>
-              <option value="<%= image.id %>"><%= image.title + " - " + image.file_name %></option>
-            <% }); %>
           </select>
         </div>
-        <button class="btn btn-primary" type="submit" style="width: 10em; margin-left: 18em" value="Submit">submit</button>
+        <script>
+          var $imageSelect = $('#image-select');
+          var $albumSelect = $( "#album-select" ).change((e) => {
+            const value = e.target.value;
+            console.log("ID", value);
+            $imageSelect.find('option[value]').remove();
+            const albumCovers = albumImages.filter(ai => ai.album_id == value);
+            albumCovers.forEach(function(image) {
+              $imageSelect.append(`<option value="${image.id}">${image.title} - ${image.file_name}</option>`);
+            });
+          });
+        </script>
+    <button class="btn btn-primary" type="submit" style="width: 10em; margin-left: 18em" value="Submit">submit</button>
       </form>
     </div>
   </body>

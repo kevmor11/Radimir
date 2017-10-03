@@ -20,31 +20,15 @@ div.container {
 /* VERSION 1 of a tag and div styling */
 a.cover-link {
   display: inline-block;
-}
-
-div.album-cover {
-  height: 18em;
-  width: 25em;
-  margin: 2em 3em;
-  position: relative;
-  overflow: hidden;
-}
-
-/* VERSION 2 of a tag and div styling */
-/* a.cover-link {
-  display: inline-block;
-  height: 18em;
-  width: 25em;
   margin: 2em 3em;
 }
 
 div.album-cover {
-  border: 1.4px solid lightgray;
   height: 18em;
   width: 25em;
   position: relative;
   overflow: hidden;
-} */
+}
 
 img.portrait {
   width:  100%;
