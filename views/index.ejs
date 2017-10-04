@@ -30,7 +30,7 @@
     <div class="container" class"z-index: 9999">
       <% albums.forEach((album, i) => { %>
         <% if(album.cover) { %>
-          <% covers.forEach((cover, ii) => { %>
+          <% covers.forEach((cover) => { %>
             <% if(cover.album_id == album.id) { %>
               <div id="lightgallery-<%= i %>" class="lg-cover">
                 <a class="cover-link" href="/uploads/<%= album.id %>/<%= cover.file_name %>" data-sub-html="<h3><%= cover.title %></h3><h4><%= cover.description %></h4>">

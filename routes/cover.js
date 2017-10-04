@@ -18,8 +18,8 @@ const express = require('express'),
       connection.query('SELECT * FROM images', (err, images) => {
         if (err) throw err;
         res.render('cover', {
-          albums: albums,
-          images: images
+          albums,
+          images
         });
       });
     });

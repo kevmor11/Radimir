@@ -12,12 +12,10 @@ div {
 
 div.container {
   width: 100%;
-  margin-left: 1.6em;
+  margin-left: .25em;
   margin-top: 7em;
 }
 
-/* TODO figure out a tag sizing */
-/* VERSION 1 of a tag and div styling */
 a.cover-link {
   display: inline-block;
   margin: 2em 3em;

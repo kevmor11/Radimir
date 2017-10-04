@@ -18,9 +18,9 @@ const express = require('express'),
       connection.query('SELECT * FROM images WHERE cover=1 ORDER BY album_id DESC', (err, covers) => {
         if (err) throw err;
         res.render('index', {
-          albums: albums,
-          covers: covers,
-          images: images
+          albums,
+          covers,
+          images
         });
       });
     });

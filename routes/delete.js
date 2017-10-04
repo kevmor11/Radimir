@@ -35,7 +35,7 @@ const express = require('express'),
         albumID = req.body.album_id;
   connection.query('SELECT id FROM images WHERE cover=1', (err, covers) => {
     if (err) throw err;
-    covers.forEach((cover, i) => {
+    covers.forEach((cover) => {
       if (cover.id == imageID) {
         connection.query(`UPDATE albums SET cover=0 WHERE id=${albumID}`, (err) => {
           if (err) throw err;

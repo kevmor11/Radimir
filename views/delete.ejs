@@ -7,7 +7,7 @@
     <% include ../partials/navbar %>
     <div class="edit">
       <h2 class="edit-album-title">albums</h2>
-      <small class="edit-album-title">note: if you delete the cover photo, you must choose another cover for the album to be visible</small>
+      <small class="edit-album-title"><strong>note:</strong> if you delete the cover photo, you must choose another cover for the album to be visible</small>
         <% albums.forEach((album, i) => { %>
           <div class="edit-image">
             <form method="post" action="/delete/album" style="display: inline;" onsubmit="return confirm('are you sure you want to delete this album and its images?');">
@@ -24,6 +24,8 @@
                   <input type="hidden" value="<%= album.id %>" name="album_id" />
                   <button type="submit" class="btn btn-primary delete">x</button>
                 </form>
+                <!-- TODO show titles of images -->
+                <!-- <h4><%= image.title %></h4> -->
               <% } %>
             <% }); %>
           </div>

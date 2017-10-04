@@ -34,10 +34,9 @@
           var $imageSelect = $('#image-select');
           var $albumSelect = $( "#album-select" ).change((e) => {
             const value = e.target.value;
-            console.log("ID", value);
             $imageSelect.find('option[value]').remove();
             const albumCovers = albumImages.filter(ai => ai.album_id == value);
-            albumCovers.forEach(function(image) {
+            albumCovers.forEach((image) => {
               $imageSelect.append(`<option value="${image.id}">${image.title} - ${image.file_name}</option>`);
             });
           });
