@@ -1,3 +1,5 @@
+/* TODO style for response design - change all em measurements to percentages and do some media queries for mobile and tablet viewers */
+
 body.home {
   margin: 30px;
 }

@@ -6,7 +6,7 @@
   <body>
     <% include ../partials/navbar %>
     <script type='text/javascript'>
-    var albumImages = <%- JSON.stringify(images) %>;
+      const albumImages = <%- JSON.stringify(images) %>;
     </script>
     <div class="upload-form">
       <form action="/cover" method="post" enctype="multipart/form-data">
@@ -17,22 +17,20 @@
           <select class="form-control" id="album-select" name="album" required >
             <option disabled selected value> -- select an album -- </option>
             <!-- For each album, render an <option> tag for the dropdown  -->
-              <% albums.forEach((album, i) => { %>
-                <option value="<%= album.id %>"><%= album.title %></option>
-                <% }); %>
+            <% albums.forEach((album, i) => { %>
+              <option value="<%= album.id %>"><%= album.title %></option>
+            <% }); %>
           </select>
         </div>
         <div class="form-group">
           <label for="title">cover image: (title - file name)</label>
           <select id='image-select' class="form-control" name="cover" required >
             <option disabled selected> -- select a cover image -- </option>
-            <!-- TODO figure out AJAX call so as to rerender second select tag based on first selection -->
-            <!-- TODO instead of this method, create a custom right-click with an option to that image as a cover photo as well as to delete a photo so it can share the same page as /delete -->
           </select>
         </div>
         <script>
-          var $imageSelect = $('#image-select');
-          var $albumSelect = $( "#album-select" ).change((e) => {
+          const $imageSelect = $('#image-select');
+          const $albumSelect = $( "#album-select" ).change((e) => {
             const value = e.target.value;
             $imageSelect.find('option[value]').remove();
             const albumCovers = albumImages.filter(ai => ai.album_id == value);
