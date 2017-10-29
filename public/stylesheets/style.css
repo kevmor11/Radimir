@@ -84,24 +84,75 @@ a {
   text-decoration: none !important;
 }
 
+.social-icons {
+  margin: 0 .2em;
+}
+
 header {
   display: inline;
-  left: 31.2%;
+  left: 43%;
   margin: 0 auto;
   /* position: relative; */
 
   overflow: hidden;
   position: fixed;
-  top: 4%;
 }
 
 .rvd {
+  color: black;
   font-family: 'AUdimat-Regular';
   font-size: 4em;
   margin: 0 auto;
-  margin-left: 3.4em;
+  margin-left: 13%;
   display: block;
   width: 100%
+}
+
+@media (min-width:320px) and (max-width:420px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+  .rvd {
+    font-family: 'AUdimat-Regular';
+    font-size: 4em;
+    margin: 0 auto;
+    margin-left: .2em;
+    display: block;
+    width: 100%
+  }
+
+  a.cover-link {
+    display: inline-block;
+    margin: .5em 0;
+  }
+
+  img.portrait {
+    width:  100%;
+    border-radius: 2px;
+    position: absolute;
+    top: 0; right: -50%; bottom: 0; left: -50%;
+  }
+
+  img.landscape {
+    height:  100%;
+    border-radius: 2px;
+    border: 1px solid black;
+    position: absolute;
+    top: 0; right: -50%; bottom: 0; left: -50%;
+  }
+
+  div.container {
+    padding: 0;
+    margin-top: 12em;
+    margin-left: 0;
+  }
+
+  h4.title {
+    color: black;
+    font-family: 'AUdimat-Regular';
+    position: relative;
+    text-align: center;
+    top: 5%;
+    width: 89%;
+  }
 }
 
 .socials {

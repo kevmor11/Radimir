@@ -29,11 +29,11 @@
           </select>
         </div>
         <script>
-          const $imageSelect = $('#image-select');
-          const $albumSelect = $( "#album-select" ).change((e) => {
-            const value = e.target.value;
+          const $imageSelect = $('#image-select'),
+                $albumSelect = $( "#album-select" ).change((e) => {
+            const value = e.target.value,
+                  albumCovers = albumImages.filter(ai => ai.album_id == value);
             $imageSelect.find('option[value]').remove();
-            const albumCovers = albumImages.filter(ai => ai.album_id == value);
             albumCovers.forEach((image) => {
               $imageSelect.append(`<option value="${image.id}">${image.title} - ${image.file_name}</option>`);
             });

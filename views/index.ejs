@@ -3,20 +3,9 @@
   <head>
     <% include ../partials/head %>
   </head>
-  <!-- TODO show a loading screen until $(window).load() and img files preloaded and when ready, play an animation or gif that plays once as a transition animation and then fades out and fades into the website -->
+  <!-- TODO show a loading screen until $(window).load() or document load and img files preloaded and when ready, play an animation or gif that plays once as a transition animation and then fades out and fades into the website -->
   <body class="home" oncontextmenu="return false">
-    <header class="header">
-      <div class"social-header">
-        <a class="socials instagram not-email not-facebook not-twitter " href="https://www.instagram.com/rvdimir/">I N S T A G R A M </a>
-        <p class="socials">/</p>
-        <a class="socials twitter not-email not-facebook not-instagram" href="https://twitter.com/RadVkoch">T W I T T E R </a>
-        <p class="socials">/</p>
-        <a class="socials facebook not-email not-twitter not-instagram" href="https://www.facebook.com/radisart/">F A C E B O O K </a>
-        <p class="socials">/</p>
-        <a class="socials email not-facebook not-twitter not-instagram" href="mailto:Radimirvkoch@gmail.com">E M A I L</a>
-      </div>
-      <p class="rvd">R V D</p>
-    </header>
+    <% include ../partials/header %>
     <% albums.forEach((album, i) => { %>
       <script type="text/javascript">
         $(document).ready(() => {

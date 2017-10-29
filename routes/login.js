@@ -41,7 +41,7 @@ const express = require('express'),
         req.session["user_id"] = 1;
         res.redirect("/upload");
       } else {
-        res.status(403).send("Woops, try again.<br><a href='/login'>Login</a>");
+        res.status(403).send("<div style='margin: 16em;'><h1>Woops, try again.</h1><br><a href='/login'><h1>Login</h1></a></div>");
       }
     });
   });
