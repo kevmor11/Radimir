@@ -1,14 +1,6 @@
-require('dotenv').load();
-
 const express = require('express'),
       bcrypt = require('bcrypt'),
-      mysql = require('mysql'),
-      pool = mysql.createPool({
-        host: process.env.DATABASE_HOST,
-        user: process.env.DATABASE_USER,
-        password: process.env.DATABASE_PASSWORD,
-        database: process.env.DATABASE_NAME
-      }),
+      pool = require('../public/js/db'),
       router = express.Router()
 
 .get("/", (req, res) => {
