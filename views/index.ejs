@@ -95,16 +95,6 @@
         $('.not-soundcloud').css('transition', 'opacity .3s ease-in');
         $('.not-soundcloud').css('opacity', 1);
       });
-
-      $lg = $(strSelector);
-      $lg.lightGallery(oOptions);
-      $lg.on('onSlideClick.lg', doToggle);
-
-      function doToggle(e) {
-          $('.lg-outer').toggleClass('lg-hide-items');
-          var curVal = $('.lg-sub-html').css('visibility');
-          $('.lg-sub-html').css('visibility', curVal == 'hidden' ? 'visible' : 'hidden');
-      }
     </script>
   </body>
 </html>
