@@ -732,7 +732,6 @@
 
         });
 
-        // @todo check load state for html5 videos
         if (_isVideo && _isVideo.html5 && !_hasPoster) {
             _this.$slide.eq(index).addClass('lg-complete');
         }

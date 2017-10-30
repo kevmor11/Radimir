@@ -129,7 +129,6 @@
                     var $tempImg = $el.find('.lg-object');
                     $el.find('.lg-video').append($tempImg);
 
-                    // @todo loading icon for html5 videos also
                     // for showing the loading indicator while loading video
                     if (!$el.find('.lg-video-object').hasClass('lg-html5')) {
                         $el.removeClass('lg-complete');

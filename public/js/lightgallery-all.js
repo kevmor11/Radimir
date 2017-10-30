@@ -735,7 +735,6 @@
 
         });
 
-        // @todo check load state for html5 videos
         if (_isVideo && _isVideo.html5 && !_hasPoster) {
             _this.$slide.eq(index).addClass('lg-complete');
         }
@@ -2400,7 +2399,6 @@
                     var $tempImg = $el.find('.lg-object');
                     $el.find('.lg-video').append($tempImg);
 
-                    // @todo loading icon for html5 videos also
                     // for showing the loading indicator while loading video
                     if (!$el.find('.lg-video-object').hasClass('lg-html5')) {
                         $el.removeClass('lg-complete');
@@ -3290,7 +3288,7 @@
 
         _this.core.$el.on('onAfterSlide.lg.tm', function(event, prevIndex, index) {
 
-            setTimeout(function() { 
+            setTimeout(function() {
                 $('#lg-share-facebook').attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + (encodeURIComponent(_this.core.$items.eq(index).attr('data-facebook-share-url') || window.location.href)));
 
                 $('#lg-share-twitter').attr('href', 'https://twitter.com/intent/tweet?text=' + _this.core.$items.eq(index).attr('data-tweet-text') + '&url=' + (encodeURIComponent(_this.core.$items.eq(index).attr('data-twitter-share-url') || window.location.href)));
