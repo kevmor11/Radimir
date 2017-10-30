@@ -8,8 +8,11 @@
     <% include ../partials/header %>
     <% albums.forEach((album, i) => { %>
       <script type="text/javascript">
+        const isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+
         $(document).ready(() => {
           $("#lightgallery-<%= i %>").lightGallery({
+            controls: isTouch ? false : true,
             download: false,
             share: false
           });
