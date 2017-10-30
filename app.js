@@ -12,6 +12,7 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       cookieSession = require("cookie-session"),
       fileUpload = require('express-fileupload'),
+      compression = require('compression'),
 
       // TODO make a new page where Rad can add upcoming art show dates
         // display only dates that have not passed yet using moment.js to determine date
@@ -49,6 +50,7 @@ const express = require('express'),
      maxAge: 24 * 60 * 60 * 1000 // 24 hours
    }))
    .use(fileUpload())
+   .use(compression())
 
    .use('/', index)
    .use('/login', login)
