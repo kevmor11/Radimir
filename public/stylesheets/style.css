@@ -92,7 +92,7 @@ a {
 
 header {
   display: inline;
-  left: 43%;
+  left: 41%;
   margin: 0 auto;
   /* position: relative; */
 
@@ -105,7 +105,7 @@ header {
   font-family: 'AUdimat-Regular';
   font-size: 4em;
   margin: 0 auto;
-  margin-left: 13%;
+  margin-left: 20.5%;
   display: block;
   width: 100%
 }
@@ -116,7 +116,7 @@ header {
     font-family: 'AUdimat-Regular';
     font-size: 4em;
     margin: 0 auto;
-    margin-left: .38em;
+    margin-left: .795em;
     display: block;
     width: 100%
   }
@@ -157,7 +157,7 @@ header {
   }
 
   header {
-    left: 29%;
+    left: 22%;
     /* margin: 0 auto; */
   }
 }
