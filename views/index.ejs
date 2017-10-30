@@ -8,17 +8,6 @@
     <% include ../partials/header %>
     <script>
       const isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
-
-      let $lg = $(strSelector);
-      $lg.lightGallery(oOptions);
-      $lg.on('onAfterOpen.lg',function(event){
-        $('.lg-toolbar').append('<a class=\"lg-icon\" href=\"javascript:toggleCaption()\">CC</a>');
-      });
-
-      function toggleCaption() {
-        let curVal = $('.lg-sub-html').css('visibility');
-        $('.lg-sub-html').css('visibility', curVal == 'hidden' ? 'visible' : 'hidden');
-      }
     </script>
     <% albums.forEach((album, i) => { %>
       <script type="text/javascript">
@@ -106,6 +95,17 @@
         $('.not-soundcloud').css('transition', 'opacity .3s ease-in');
         $('.not-soundcloud').css('opacity', 1);
       });
+
+      let $lg = $(strSelector);
+      $lg.lightGallery(oOptions);
+      $lg.on('onAfterOpen.lg', (event) => {
+        $('.lg-toolbar').append('<a class=\"lg-icon\" href=\"javascript:toggleCaption()\">CC</a>');
+      });
+
+      function toggleCaption() {
+        let curVal = $('.lg-sub-html').css('visibility');
+        $('.lg-sub-html').css('visibility', curVal == 'hidden' ? 'visible' : 'hidden');
+      }
     </script>
   </body>
 </html>
