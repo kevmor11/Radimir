@@ -11,7 +11,9 @@ const express = require('express'),
       cookieSession = require("cookie-session"),
       fileUpload = require('express-fileupload'),
 
-// Routes
+      // TODO make a new page where Rad can add upcoming art show dates
+        // display only dates that have not passed yet using moment.js to determine date
+      // Routes
       index = require('./routes/index'),
       login = require('./routes/login'),
       logout = require('./routes/logout'),

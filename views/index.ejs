@@ -6,10 +6,11 @@
   <!-- TODO show a loading screen until $(window).load() or document load and img files preloaded and when ready, play an animation or gif that plays once as a transition animation and then fades out and fades into the website -->
   <body class="home" oncontextmenu="return false">
     <% include ../partials/header %>
+    <script>
+      const isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+    </script>
     <% albums.forEach((album, i) => { %>
     <script type="text/javascript">
-        let isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
-
         $(document).ready(() => {
           $("#lightgallery-<%= i %>").lightGallery({
             controls: isTouch ? false : true,
