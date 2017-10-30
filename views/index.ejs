@@ -30,7 +30,7 @@
                   <div class="album-cover">
                     <img class="cover-image-<%= i %>" src="/uploads/<%= album.id %>/<%= cover.file_name %>" alt="">
                   </div>
-                  <!-- <h4 class="title"><%= album.title %></h4> -->
+                  <h4 class="title"><%= album.title %></h4>
                 </a>
                 <% images.forEach((image) => { %>
                   <% if(image.album_id === album.id && image.file_name !== cover.file_name && images.length > 0) { %>
