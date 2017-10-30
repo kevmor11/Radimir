@@ -7,8 +7,8 @@
   <body class="home" oncontextmenu="return false">
     <% include ../partials/header %>
     <% albums.forEach((album, i) => { %>
-      <script type="text/javascript">
-        const isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+    <script type="text/javascript">
+        let isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 
         $(document).ready(() => {
           $("#lightgallery-<%= i %>").lightGallery({
