@@ -4,7 +4,7 @@ const express = require('express'),
       mysql = require('mysql'),
       mkdirp = require('mkdirp'),
       fs = require('fs'),
-      pool = mysql.createConnection({
+      pool = mysql.createPool({
         connectionLimit : 10,
         host: process.env.DATABASE_HOST,
         user: process.env.DATABASE_USER,

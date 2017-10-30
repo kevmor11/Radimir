@@ -3,7 +3,7 @@ require('dotenv').load();
 const express = require('express'),
       bcrypt = require('bcrypt'),
       mysql = require('mysql'),
-      pool = mysql.createConnection({
+      pool = mysql.createPool({
         connectionLimit : 10,
         host: process.env.DATABASE_HOST,
         user: process.env.DATABASE_USER,
