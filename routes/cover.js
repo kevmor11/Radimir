@@ -2,7 +2,7 @@ require('dotenv').load();
 
 const express = require('express'),
       mysql = require('mysql'),
-      connection = mysql.createConnection({
+      pool = mysql.createConnection({
         host: process.env.DATABASE_HOST,
         user: process.env.DATABASE_USER,
         password: process.env.DATABASE_PASSWORD,
@@ -11,33 +11,37 @@ const express = require('express'),
       router = express.Router()
 
 .get('/', (req, res) => {
-  if (req.session.user_id) {
-    connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
-      if (err) throw err;
-
-      connection.query('SELECT * FROM images', (err, images) => {
+  pool.getConnection((err, connection) => {
+    if (req.session.user_id) {
+      connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
         if (err) throw err;
-        res.render('cover', {
-          albums,
-          images
+
+        connection.query('SELECT * FROM images', (err, images) => {
+          if (err) throw err;
+          res.render('cover', {
+            albums,
+            images
+          });
         });
       });
-    });
-  } else {
-    res.redirect('login');
-  }
+    } else {
+      res.redirect('login');
+    }
+  })
 })
 
 .post('/', (req, res) => {
-  const albumID = req.body.album,
-        imageID = req.body.cover;
-  connection.query(`UPDATE images SET cover=0 WHERE album_id=${albumID}`, (err) => {
-    if (err) throw err;
-    connection.query(`UPDATE images SET cover=1 WHERE (album_id=${albumID} AND id=${imageID})`, (err) => {
+  pool.getConnection((err, connection) => {
+    const albumID = req.body.album,
+          imageID = req.body.cover;
+    connection.query(`UPDATE images SET cover=0 WHERE album_id=${albumID}`, (err) => {
       if (err) throw err;
-      connection.query(`UPDATE albums SET cover=1 WHERE id=${albumID}`, (err) => {
+      connection.query(`UPDATE images SET cover=1 WHERE (album_id=${albumID} AND id=${imageID})`, (err) => {
         if (err) throw err;
-        res.redirect('/cover-success');
+        connection.query(`UPDATE albums SET cover=1 WHERE id=${albumID}`, (err) => {
+          if (err) throw err;
+          res.redirect('/cover-success');
+        });
       });
     });
   });

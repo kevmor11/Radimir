@@ -3,7 +3,7 @@ require('dotenv').load();
 const express = require('express'),
       bcrypt = require('bcrypt'),
       mysql = require('mysql'),
-      connection = mysql.createConnection({
+      pool = mysql.createConnection({
         host: process.env.DATABASE_HOST,
         user: process.env.DATABASE_USER,
         password: process.env.DATABASE_PASSWORD,
@@ -22,6 +22,7 @@ const express = require('express'),
 })
 
 .post("/", (req, res) => {
+  pool.getConnection((err, connection) => {
     connection.query('SELECT username, password FROM admins WHERE id = 1', (err, result) => {
       if (err) throw err;
 
@@ -45,5 +46,6 @@ const express = require('express'),
       }
     });
   });
+});
 
 module.exports = router;
