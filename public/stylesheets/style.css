@@ -24,8 +24,10 @@ a.cover-link {
 }
 
 div.album-cover {
-  height: 18em;
-  width: 25em;
+  height: 25rem;
+  width: 35rem;
+  /* height: 18em;
+  width: 25em; */
   position: relative;
   overflow: hidden;
 }
@@ -114,7 +116,7 @@ header {
     font-family: 'AUdimat-Regular';
     font-size: 4em;
     margin: 0 auto;
-    margin-left: .2em;
+    margin-left: .38em;
     display: block;
     width: 100%
   }
@@ -141,7 +143,7 @@ header {
 
   div.container {
     padding: 0;
-    margin-top: 12em;
+    margin-top: 8em;
     margin-left: 0;
   }
 
@@ -152,6 +154,11 @@ header {
     text-align: center;
     top: 5%;
     width: 89%;
+  }
+
+  header {
+    left: 29%;
+    /* margin: 0 auto; */
   }
 }
 
