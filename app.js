@@ -1,5 +1,7 @@
 "use strict";
 
+// TODO delete extra lightGallery .js files that I don't need (like autoplay etc)
+
 const express = require('express'),
       path = require('path'),
       favicon = require('serve-favicon'),
