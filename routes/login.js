@@ -22,7 +22,8 @@ const express = require('express'),
 })
 
 .post("/", (req, res) => {
-  pool.getConnection((err, connection) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
     connection.query('SELECT username, password FROM admins WHERE id = 1', (err, result) => {
       if (err) throw err;
 

@@ -13,7 +13,8 @@ const express = require('express'),
       router = express.Router()
 
 .get('/', (req, res) => {
-  pool.getConnection((err, connection) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
     connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
       if (err) throw err;
 
@@ -27,7 +28,8 @@ const express = require('express'),
 })
 
 .post('/', (req, res) => {
-  pool.getConnection((err, connection) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
     const album = req.body.album,
           title = req.body.title,
           description = req.body.description,

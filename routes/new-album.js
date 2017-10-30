@@ -19,7 +19,8 @@ const express = require('express'),
 })
 
 .post('/', (req, res) => {
-  pool.getConnection((err, connection) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
     const title = req.body.title,
           description = req.body.description;
     connection.query(`INSERT INTO albums (title, description, cover) VALUES (${mysql.escape(title)}, ${mysql.escape(description)}, 0)`,

@@ -12,7 +12,8 @@ const express = require('express'),
       router = express.Router()
 
 .get('/', (req, res) => {
-  pool.getConnection((err, connection) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
     if (req.session.user_id) {
       connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
         if (err) throw err;
@@ -32,7 +33,8 @@ const express = require('express'),
 })
 
 .post('/', (req, res) => {
-  pool.getConnection((err, connection) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
     const imageID = req.body.image_id,
           fileName = req.body.image_filename,
           albumID = req.body.album_id;
@@ -57,7 +59,8 @@ const express = require('express'),
 })
 
 .post('/album', (req, res) => {
-  pool.getConnection((err, connection) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
     const albumID = req.body.album_id;
     connection.query(`DELETE FROM images WHERE album_id=${albumID}`, (err) => {
       if (err) throw err;

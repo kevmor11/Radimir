@@ -12,7 +12,8 @@ const express = require('express'),
       router = express.Router()
 
 .get("/", (req, res) => {
-  pool.getConnection((err, connection) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
     connection.query('SELECT * FROM albums ORDER BY id DESC', (err, albums) => {
       if (err) throw err;
       connection.query('SELECT * FROM images', (err, images) => {
