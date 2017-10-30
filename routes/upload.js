@@ -5,7 +5,6 @@ const express = require('express'),
       mkdirp = require('mkdirp'),
       fs = require('fs'),
       pool = mysql.createPool({
-        connectionLimit : 10,
         host: process.env.DATABASE_HOST,
         user: process.env.DATABASE_USER,
         password: process.env.DATABASE_PASSWORD,
@@ -25,6 +24,7 @@ const express = require('express'),
         res.redirect('login');
       }
     });
+    connection.release();
   });
 })
 

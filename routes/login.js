@@ -4,7 +4,6 @@ const express = require('express'),
       bcrypt = require('bcrypt'),
       mysql = require('mysql'),
       pool = mysql.createPool({
-        connectionLimit : 10,
         host: process.env.DATABASE_HOST,
         user: process.env.DATABASE_USER,
         password: process.env.DATABASE_PASSWORD,
@@ -47,6 +46,7 @@ const express = require('express'),
         res.status(403).send("<div style='margin: 16em;'><h1>Woops, try again.</h1><br><a href='/login'><h1>Login</h1></a></div>");
       }
     });
+    connection.release();
   });
 });
 
