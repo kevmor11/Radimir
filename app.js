@@ -1,10 +1,12 @@
 "use strict";
 
+// TODO change lightgallery arrow icons out for different more minimal looking icons
+
 // TODO delete extra lightGallery .js files that I don't need (like autoplay etc)
 
 const express = require('express'),
       path = require('path'),
-      favicon = require('serve-favicon'),
+      // favicon = require('serve-favicon'),
       logger = require('morgan'),
       cookieParser = require('cookie-parser'),
       bodyParser = require('body-parser'),

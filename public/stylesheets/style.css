@@ -1,5 +1,7 @@
 /* TODO style for response design - change all em measurements to percentages and do some media queries for mobile and tablet viewers */
 
+/* TODO reduce gap between multiple album rows */
+
 body.home {
   margin: 30px;
 }
