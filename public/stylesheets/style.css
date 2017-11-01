@@ -3,7 +3,7 @@
 /* TODO reduce gap between multiple album rows */
 
 body.home {
-  margin: 30px;
+  margin: 20px 30px;
 }
 
 p a {
@@ -22,7 +22,7 @@ div.container {
 
 a.cover-link {
   display: inline-block;
-  margin: 2em 3em;
+  margin: 1em 3em;
 }
 
 div.album-cover {
@@ -99,7 +99,7 @@ header {
   /* position: relative; */
 
   overflow: hidden;
-  position: fixed;
+  position: absolute;
 }
 
 .rvd {
