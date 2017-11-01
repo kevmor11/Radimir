@@ -19,7 +19,6 @@
     "express": "~4.15.2",
     "express-fileupload": "^0.1.4",
     "fs": "0.0.1-security",
-    "lg-autoplay": "^1.0.4",
     "lg-fullscreen": "^1.0.1",
     "lg-hash": "^1.0.2",
     "lg-pager": "^1.0.2",
