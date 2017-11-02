@@ -28,8 +28,6 @@ a.cover-link {
 div.album-cover {
   height: 25rem;
   width: 35rem;
-  /* height: 18em;
-  width: 25em; */
   position: relative;
   overflow: hidden;
 }
@@ -185,4 +183,140 @@ header {
         url('AUdimat-Regular.ttf.eot?#iefix') format('embedded-opentype');
     font-weight: normal;
     font-style: normal;
+}
+
+@media (min-width:320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+}
+
+@media (min-width:481px) {
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+}
+
+@media (min-width:641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+
+@media (min-width:961px) {
+  /* tablet, landscape iPad, lo-res laptops ands desktops */
+}
+
+@media (min-width:1025px) {
+  /* big landscape tablets, laptops, and desktops */
+}
+
+
+/* 13" Macbook Pro */
+@media (min-width:1280px) {
+  div.album-cover {
+    height: 25rem;
+    width: 32.2rem;
+  }
+
+  a.cover-link {
+    margin: 1.2em 2.15em;
+  }
+
+  h4.title {
+    font-size: 1.5em;
+  }
+}
+
+/* 11" Macbook Air */
+@media (min-width:1336px) {
+  div.album-cover {
+    height: 25rem;
+    width: 35rem;
+  }
+
+  a.cover-link {
+    margin: .5em 2.5em;
+  }
+
+  h4.title {
+    font-size: 1.5em;
+  }
+
+  header {
+    left: 42%;
+  }
+}
+
+/* 15" Macbook Pro */
+@media (min-width:1440px) {
+  div.album-cover {
+    height: 26rem;
+    width: 36rem;
+  }
+
+  a.cover-link {
+    margin: 1em 3em;
+  }
+
+  header {
+    left: 42.4%;
+  }
+}
+
+/* 21.5" Macbook Air */
+@media (min-width:1920px) {
+  div.album-cover {
+    height: 36rem;
+    width: 49.5rem;
+  }
+
+  a.cover-link {
+    margin: 1.5em 4em;
+  }
+
+  h4.title {
+    font-size: 2.2em;
+    margin-top: .6em;
+  }
+
+  p.rvd {
+    font-size: 5em;
+    margin-left: 13%;
+  }
+
+  div.container {
+    margin-top: 9em;
+  }
+
+  header {
+    left: 44.5%;
+  }
+
+  div.social-header {
+    margin-left: -2em;
+  }
+}
+
+/* 27" Macbook Air */
+@media (min-width:2560px) {
+  div.album-cover {
+    height: 54rem;
+    width: 68rem;
+  }
+
+  a.cover-link {
+    margin: 2em 5em;
+  }
+
+  h4.title {
+    font-size: 3em;
+  }
+
+  p.rvd {
+    font-size: 6em;
+    margin-left: 7%;
+  }
+
+  div.container {
+    margin-top: 8em;
+  }
+
+  header {
+    left: 46%;
+  }
 }
