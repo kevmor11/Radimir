@@ -1,12 +1,12 @@
 .lg-sub-html,
 .lg-toolbar {
-    background-color: rgba(0, 0, 0, .45)
+    background-color: rgba(0, 0, 0, 0)
 }
 
 @font-face {
     font-family: lg;
-    src: url(../fonts/lg.eot?n1z373);
-    src: url(../fonts/lg.eot?#iefixn1z373) format("embedded-opentype"), url(../fonts/lg.woff?n1z373) format("woff"), url(../fonts/lg.ttf?n1z373) format("truetype"), url(../fonts/lg.svg?n1z373#lg) format("svg");
+    src: url(../fonts/icomoon.eot?n1z373);
+    src: url(../fonts/icomoon.eot?#iefixn1z373) format("embedded-opentype"), url(../fonts/icomoon.woff?n1z373) format("woff"), url(../fonts/icomoon.ttf?n1z373) format("truetype"), url(../fonts/icomoon.svg) format("svg");
     font-weight: 400;
     font-style: normal
 }
@@ -25,7 +25,7 @@
 
 .lg-actions .lg-next,
 .lg-actions .lg-prev {
-    background-color: rgba(0, 0, 0, .45);
+    background-color: rgba(0, 0, 0, .2);
     border-radius: 2px;
     color: #999;
     cursor: pointer;
@@ -56,7 +56,7 @@
 }
 
 .lg-actions .lg-next:before {
-    content: "\f054"
+    content: "\e909"
 }
 
 .lg-actions .lg-prev {
@@ -64,7 +64,7 @@
 }
 
 .lg-actions .lg-prev:after {
-    content: "\f053"
+    content: "\e905"
 }
 
 @-webkit-keyframes lg-right-end {
@@ -191,7 +191,7 @@
 }
 
 .lg-toolbar .lg-close:after {
-    content: "\e070"
+    content: "\e900"
 }
 
 .lg-toolbar .lg-download:after {
@@ -395,7 +395,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 }
 
 .lg-outer .lg-toogle-thumb:after {
-    content: "\e1ff"
+    content: "\e5c3"
 }
 
 .lg-outer .lg-video-cont {
@@ -684,11 +684,11 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 }
 
 .lg-fullscreen:after {
-    content: "\e20c"
+    content: "\e901"
 }
 
 .lg-fullscreen-on .lg-fullscreen:after {
-    content: "\e20d"
+    content: "\e901"
 }
 
 .lg-outer #lg-dropdown-overlay {
