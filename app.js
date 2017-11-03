@@ -50,7 +50,10 @@ const express = require('express'),
      maxAge: 24 * 60 * 60 * 1000 // 24 hours
    }))
    .use(fileUpload())
-   .use(compression())
+   .use(compression({
+    level: 9,
+    memLevel: 9
+}))
 
    .use('/', index)
    .use('/login', login)
