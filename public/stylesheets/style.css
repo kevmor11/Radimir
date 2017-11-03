@@ -256,6 +256,10 @@ header {
   header {
     left: 42.4%;
   }
+
+  h4.title {
+    font-size: 1.3em;
+  }
 }
 
 /* 21.5" Macbook Air */
