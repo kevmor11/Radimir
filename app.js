@@ -6,7 +6,7 @@
 
 const express = require('express'),
       path = require('path'),
-      // favicon = require('serve-favicon'),
+      favicon = require('serve-favicon'),
       logger = require('morgan'),
       cookieParser = require('cookie-parser'),
       bodyParser = require('body-parser'),
@@ -35,14 +35,14 @@ const express = require('express'),
 
 // uncomment after placing your favicon in /public
 // TODO get Rad to design a Favicon
-  //  .use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+   .use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+   .use(compression())
    .use(logger('dev'))
    .use(bodyParser.json())
    .use(bodyParser.urlencoded({
      extended: false
    }))
    .use(cookieParser())
-   .use(compression({ threshold: 0 }))
    .use(express.static(path.join(__dirname, 'public')))
    .use(cookieSession({
      name: 'session',
@@ -51,6 +51,7 @@ const express = require('express'),
      maxAge: 24 * 60 * 60 * 1000 // 24 hours
    }))
    .use(fileUpload())
+   .set('view cache', true)
 
    .use('/', index)
    .use('/login', login)

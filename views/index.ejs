@@ -5,8 +5,19 @@
   </head>
   <!-- TODO show a loading screen until $(window).load() or document load and img files preloaded and when ready, play an animation or gif that plays once as a transition animation and then fades out and fades into the website -->
   <body class="home" oncontextmenu="return false">
+    <div class="preload">
+      <img class="pre-gif" src="/images/preload.gif">
+    </div>
     <% include ../partials/header %>
     <script>
+      setTimeout(
+        $(window).on('load', () => {
+          $('.preload').fadeOut(1000, () => {
+            $('.header').fadeIn(1000);
+            $('.container').fadeIn(1000);
+          });
+        }),
+      6000);
       const isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
     </script>
     <% albums.forEach((album, i) => { %>
@@ -53,6 +64,7 @@
           })
         </script>
       <% }); %>
+    </div>
     <script>
       $('.instagram').hover(() => {
         $('.not-instagram').css('transition', 'opacity .3s ease-in');
