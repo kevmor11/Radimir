@@ -1,6 +1,6 @@
 "use strict";
 
-// TODO change lightgallery arrow icons out for different more minimal looking icons
+// TODO run speed tests and follow steps to make faster
 
 // TODO delete extra lightGallery .js files that I don't need (like autoplay etc)
 
