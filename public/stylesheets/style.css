@@ -3,7 +3,7 @@
 /* TODO reduce gap between multiple album rows */
 
 body.home {
-  margin: 20px 30px;
+  margin: 20px 30px 0 30px;
 }
 
 p a {
@@ -16,7 +16,6 @@ div {
 
 div.container {
   width: 100%;
-  margin-left: .25em;
   margin-top: 7em;
 }
 
@@ -246,7 +245,7 @@ header {
 @media (min-width:1440px) {
   div.album-cover {
     height: 26rem;
-    width: 36rem;
+    width: 36.3rem;
   }
 
   a.cover-link {
