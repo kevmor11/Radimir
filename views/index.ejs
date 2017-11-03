@@ -34,7 +34,7 @@
                 </a>
                 <% images.forEach((image) => { %>
                   <% if(image.album_id === album.id && image.file_name !== cover.file_name && images.length > 0) { %>
-                    <a href="/uploads/<%= album.id %>/<%= image.file_name %>" style="display: none;" data-sub-html="<h3><%= image.title %></h3><h4><%= image.description %></h4>">
+                    <a class="not-cover" href="/uploads/<%= album.id %>/<%= image.file_name %>" data-sub-html="<h3><%= image.title %></h3><h4><%= image.description %></h4>">
                       <img src="/uploads/<%= album.id %>/<%= image.file_name %>" alt="">
                     </a>
                   <% }  %>

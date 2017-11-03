@@ -85,6 +85,10 @@ a {
   text-decoration: none !important;
 }
 
+a.not-cover {
+  display: none;
+}
+
 .social-icons {
   margin: 0 .2em;
 }

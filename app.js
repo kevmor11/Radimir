@@ -42,6 +42,7 @@ const express = require('express'),
      extended: false
    }))
    .use(cookieParser())
+   .use(compression({ threshold: 0 }))
    .use(express.static(path.join(__dirname, 'public')))
    .use(cookieSession({
      name: 'session',
@@ -50,10 +51,6 @@ const express = require('express'),
      maxAge: 24 * 60 * 60 * 1000 // 24 hours
    }))
    .use(fileUpload())
-   .use(compression({
-    level: 9,
-    memLevel: 9
-}))
 
    .use('/', index)
    .use('/login', login)
