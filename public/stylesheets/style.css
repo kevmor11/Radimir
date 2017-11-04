@@ -17,7 +17,7 @@ div {
 }
 
 div.container {
-  display: none;
+  opacity: 0;
   width: 100%;
   margin-top: 7em;
 }
@@ -111,7 +111,7 @@ a.not-cover {
 
 header.header {
   display: none;
-  left: 41%;
+  left: 42.4%;
   margin: 0 auto;
   overflow: hidden;
   position: absolute;
@@ -181,7 +181,7 @@ header.header {
 
 .socials {
   color: black;
-   display: inline;
+  display: inline;
   text-decoration: inherit;
 }
 
@@ -189,7 +189,6 @@ header.header {
   background-color: white;
   width: 100%;
   z-index: 9998;
-
 }
 
 @font-face {

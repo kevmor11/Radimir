@@ -11,6 +11,9 @@
     <% include ../partials/header %>
     <script>
       $('.preload').fadeOut(3500, () => {
+        $('.container').css('opacity', 1);
+        // Make the fade-in a callback to the css call above because currently it is not working since
+        // they are running at the same time
         $('.header').fadeIn(550);
         $('.container').fadeIn(550);
       });
@@ -51,7 +54,11 @@
           <% }); %>
         <% } %>
         <script>
+          // We cannot preform this code on elements that are set to display: none
+            // First we need to set Opacity of the div to 0 and then preform this code
+              // and then set display to none and opacity back to 1
           $(window).load(() => {
+            console.log("Cover", $('.cover-image-<%= i %>').width());
             if($('.cover-image-<%= i %>').width() > $('.cover-image-<%= i %>').height()) {
               $('.cover-image-<%= i %>').addClass('landscape');
             } else {
@@ -60,7 +67,7 @@
           })
         </script>
       <% }); %>
-    </div>
+    <!-- </div> -->
     <script>
       $('.instagram').hover(() => {
         $('.not-instagram').css('transition', 'opacity .3s ease-in');
