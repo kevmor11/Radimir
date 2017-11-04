@@ -257,6 +257,12 @@ header.header {
 
 /* 15" Macbook Pro */
 @media (min-width:1440px) {
+  img.logo {
+    margin-top: 2.4%;
+    margin-left: 7.1%;
+    width: 13%;
+  }
+
   div.album-cover {
     height: 26rem;
     width: 36.3rem;
@@ -266,8 +272,8 @@ header.header {
     margin: 1em 3em;
   }
 
-  header {
-    left: 42.4%;
+  header.header {
+    left: 41%;
   }
 
   h4.title {
