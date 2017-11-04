@@ -62,6 +62,12 @@ img.landscape {
   top: 0; right: -50%; bottom: 0; left: -50%;
 }
 
+img.logo {
+  margin-top: 2.4%;
+  margin-left: 6.5%;
+  width: 13%;
+}
+
 div.lg-cover {
   display: inline;
 }
