@@ -10,16 +10,10 @@
     </div>
     <% include ../partials/header %>
     <script>
-      setTimeout(
-        // () => {
-          $(window).load(() => {
-            $('.preload').fadeOut(1000, () => {
-              $('.header').fadeIn(1000);
-              $('.container').fadeIn(1000);
-            });
-          })
-        // }
-      , 6000);
+      $('.preload').fadeOut(3500, () => {
+        $('.header').fadeIn(500);
+        $('.container').fadeIn(500);
+      });
       const isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
     </script>
     <% albums.forEach((album, i) => { %>
