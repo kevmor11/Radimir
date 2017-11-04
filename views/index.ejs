@@ -8,9 +8,11 @@
       <img class="pre-gif" src="/images/preload.gif">
     </div>
     <% include ../partials/header %>
+    <!-- TODO see if I can get gif to always start at the beginning now matter if the page is regular or hard refreshed -->
+    <!-- TODO see if I can reduce gap between when the opacity fadeIn starts and when the fadeOut begins -->
     <script>
       function transition(element) {
-        $(element).css('transition', 'opacity 1s linear').css('opacity', 1);
+        $(element).css('transition', 'opacity 0.45s ease-in').css('opacity', 1);
       };
 
       $('.preload').fadeOut(3500, () => {
@@ -55,7 +57,6 @@
         <% } %>
         <script>
           $(window).load(() => {
-            console.log("Cover", $('.cover-image-<%= i %>').width());
             if($('.cover-image-<%= i %>').width() > $('.cover-image-<%= i %>').height()) {
               $('.cover-image-<%= i %>').addClass('landscape');
             } else {
@@ -66,47 +67,30 @@
       <% }); %>
     </div>
     <script>
-      $('.instagram').hover(() => {
-        $('.not-instagram').css('transition', 'opacity .3s ease-in');
-        $('.not-instagram').css('opacity', 0.5);
-      });
-      $('.facebook').hover(() => {
-        $('.not-facebook').css('transition', 'opacity .3s ease-in');
-        $('.not-facebook').css('opacity', 0.5);
-      });
-      $('.email').hover(() => {
-        $('.not-email').css('transition', 'opacity .3s ease-in');
-        $('.not-email').css('opacity', 0.5);
-      });
-      $('.twitter').hover(() => {
-        $('.not-twitter').css('transition', 'opacity .3s ease-in');
-        $('.not-twitter').css('opacity', 0.5);
-      });
-      $('.soundcloud').hover(() => {
-        $('.not-soundcloud').css('transition', 'opacity .3s ease-in');
-        $('.not-soundcloud').css('opacity', 0.5);
-      });
+      function hover(element) {
+        $('.'+element).hover(() => {
+          $('.not-'+element).css('transition', 'opacity .3s ease-in');
+          $('.not-'+element).css('opacity', 0.5);
+        });
+      }
 
-      $('.instagram').mouseleave(() => {
-        $('.not-instagram').css('transition', 'opacity .3s ease-in');
-        $('.not-instagram').css('opacity', 1);
-      });
-      $('.facebook').mouseleave(() => {
-        $('.not-facebook').css('transition', 'opacity .3s ease-in');
-        $('.not-facebook').css('opacity', 1);
-      });
-      $('.email').mouseleave(() => {
-        $('.not-email').css('transition', 'opacity .3s ease-in');
-        $('.not-email').css('opacity', 1);
-      });
-      $('.twitter').mouseleave(() => {
-        $('.not-twitter').css('transition', 'opacity .3s ease-in');
-        $('.not-twitter').css('opacity', 1);
-      });
-      $('.soundcloud').mouseleave(() => {
-        $('.not-soundcloud').css('transition', 'opacity .3s ease-in');
-        $('.not-soundcloud').css('opacity', 1);
-      });
+      function leave(element) {
+        $('.'+element).mouseleave(() => {
+          $('.not-'+element).css('transition', 'opacity .3s ease-in');
+          $('.not-'+element).css('opacity', 1);
+        });
+      }
+
+      hover('instagram');
+      hover('facebook');
+      hover('email');
+      hover('twitter');
+      hover('soundcloud');
+      leave('instagram');
+      leave('facebook');
+      leave('email');
+      leave('twitter');
+      leave('soundcloud');
     </script>
   </body>
 </html>
