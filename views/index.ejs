@@ -3,19 +3,19 @@
   <head>
     <% include ../partials/head %>
   </head>
-  <!-- TODO show a loading screen until $(window).load() or document load and img files preloaded and when ready, play an animation or gif that plays once as a transition animation and then fades out and fades into the website -->
   <body class="home" oncontextmenu="return false">
     <div class="preload">
       <img class="pre-gif" src="/images/preload.gif">
     </div>
     <% include ../partials/header %>
     <script>
+      function transition(element) {
+        $(element).css('transition', 'opacity 1s linear').css('opacity', 1);
+      };
+
       $('.preload').fadeOut(3500, () => {
-        $('.container').css('opacity', 1);
-        // Make the fade-in a callback to the css call above because currently it is not working since
-        // they are running at the same time
-        $('.header').fadeIn(550);
-        $('.container').fadeIn(550);
+        transition('.header');
+        transition('.container');
       });
       const isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
     </script>
@@ -54,9 +54,6 @@
           <% }); %>
         <% } %>
         <script>
-          // We cannot preform this code on elements that are set to display: none
-            // First we need to set Opacity of the div to 0 and then preform this code
-              // and then set display to none and opacity back to 1
           $(window).load(() => {
             console.log("Cover", $('.cover-image-<%= i %>').width());
             if($('.cover-image-<%= i %>').width() > $('.cover-image-<%= i %>').height()) {
@@ -67,7 +64,7 @@
           })
         </script>
       <% }); %>
-    <!-- </div> -->
+    </div>
     <script>
       $('.instagram').hover(() => {
         $('.not-instagram').css('transition', 'opacity .3s ease-in');
