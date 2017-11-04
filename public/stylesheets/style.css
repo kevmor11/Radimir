@@ -35,7 +35,7 @@ img.pre-gif {
 
 a.cover-link {
   display: inline-block;
-  margin: 1em 3em;
+  margin: .8em 3em;
 }
 
 div.album-cover {
@@ -89,7 +89,6 @@ body {
   /* padding: 30px; */
   margin: 0 auto;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  /* TODO make background image work  */
    background-image: url(../public/images/background.png);
 }
 
@@ -131,58 +130,6 @@ header.header {
   width: 100%
 }
 
-@media (min-width:320px) and (max-width:420px) {
-  /* smartphones, iPhone, portrait 480x320 phones */
-  .rvd {
-    font-family: 'AUdimat-Regular';
-    font-size: 4em;
-    margin: 0 auto;
-    margin-left: .795em;
-    display: block;
-    width: 100%
-  }
-
-  a.cover-link {
-    display: inline-block;
-    margin: .5em 0;
-  }
-
-  img.portrait {
-    width:  100%;
-    border-radius: 2px;
-    position: absolute;
-    top: 0; right: -50%; bottom: 0; left: -50%;
-  }
-
-  img.landscape {
-    height:  100%;
-    border-radius: 2px;
-    border: 1px solid black;
-    position: absolute;
-    top: 0; right: -50%; bottom: 0; left: -50%;
-  }
-
-  div.container {
-    padding: 0;
-    margin-top: 8em;
-    margin-left: 0;
-  }
-
-  h4.title {
-    color: black;
-    font-family: 'AUdimat-Regular';
-    position: relative;
-    text-align: center;
-    top: 5%;
-    width: 89%;
-  }
-
-  header {
-    left: 22%;
-    /* margin: 0 auto; */
-  }
-}
-
 .socials {
   color: black;
   display: inline;
@@ -206,7 +153,53 @@ header.header {
 }
 
 @media (min-width:320px) {
-  /* smartphones, iPhone, portrait 480x320 phones */
+  div.container {
+    margin-top: 7.2em;
+    padding: 0;
+  }
+
+  header.header {
+    left: 19.5%;
+  }
+
+  img.logo {
+    margin-left: 21%;
+    margin-top: 6%;
+    width: 35%;
+  }
+
+  .social-icons {
+    width: 1.4em;
+  }
+
+  a.cover-link {
+    display: inline-block;
+    margin: .5em 0;
+  }
+
+  img.portrait {
+    width:  100%;
+    border-radius: 2px;
+    position: absolute;
+    top: 0; right: -50%; bottom: 0; left: -50%;
+  }
+
+  img.landscape {
+    height:  100%;
+    border-radius: 2px;
+    border: 1px solid black;
+    position: absolute;
+    top: 0; right: -50%; bottom: 0; left: -50%;
+  }
+
+  h4.title {
+    color: black;
+    font-family: 'AUdimat-Regular';
+    position: relative;
+    text-align: center;
+    top: 5%;
+    width: 89%;
+  }
 }
 
 @media (min-width:481px) {
