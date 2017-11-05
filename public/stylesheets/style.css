@@ -285,6 +285,14 @@ header.header {
 
 /* 13" Macbook Pro */
 @media (min-width:1280px) {
+  div.container {
+    margin-top: 8.2em;
+  }
+
+  body.home {
+    margin: 20px 44px 0 44px;
+  }
+
   div.album-cover {
     height: 25rem;
     width: 32.2rem;
@@ -315,15 +323,15 @@ header.header {
   }
 
   header {
-    left: 42%;
+    left: 39.5%;
   }
 }
 
 /* 15" Macbook Pro */
 @media (min-width:1440px) {
   img.logo {
-    margin-top: 2.4%;
-    margin-left: 7.1%;
+    margin-top: 2.7%;
+    margin-left: 9.1%;
     width: 13%;
   }
 
@@ -333,11 +341,11 @@ header.header {
   }
 
   a.cover-link {
-    margin: 1em 3em;
+    margin: .5em 3em;
   }
 
   header.header {
-    left: 41%;
+    left: 41.3%;
   }
 
   h4.title {
