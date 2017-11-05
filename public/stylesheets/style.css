@@ -152,9 +152,14 @@ header.header {
     font-style: normal;
 }
 
+/* iPhone 6 */
 @media (min-width:320px) {
+  body.home {
+    margin: 10px 30px 0 30px;
+  }
+
   div.container {
-    margin-top: 7.2em;
+    margin-top: 7.1em;
     padding: 0;
   }
 
@@ -163,9 +168,9 @@ header.header {
   }
 
   img.logo {
-    margin-left: 21%;
-    margin-top: 6%;
-    width: 35%;
+    margin-left: 23%;
+    margin-top: 5%;
+    width: 32%;
   }
 
   .social-icons {
@@ -174,7 +179,7 @@ header.header {
 
   a.cover-link {
     display: inline-block;
-    margin: .5em 0;
+    margin: 0;
   }
 
   img.portrait {
@@ -199,6 +204,65 @@ header.header {
     text-align: center;
     top: 5%;
     width: 89%;
+  }
+
+  div.album-cover {
+    height: 24rem;
+    width: 35rem;
+  }
+}
+
+/* iPhone 6 landscape */
+@media (min-device-width: 320px) and (orientation: landscape) {
+  .social-icons {
+    width: 1.6em;
+  }
+
+  header.header {
+    left: 30.8%;
+  }
+
+  img.logo {
+    margin-left: 15.9%;
+    margin-top: 3%;
+    width: 23%;
+  }
+
+  div.album-cover {
+    height: 22rem;
+    width: 29rem;
+  }
+
+  a.cover-link {
+    margin: .2em 1em;
+  }
+
+  body.home {
+    margin: 20px 12px 0 12px;
+  }
+}
+
+/* iPhone 6 Plus */
+@media (min-width:413px) {
+  header.header {
+    left: 18.5%;
+  }
+
+  img.logo {
+    margin-left: 21.5%;
+    margin-top: 5.5%;
+  }
+
+  .social-icons {
+    width: 1.7em;
+  }
+
+  div.container {
+    margin-top: 8em;
+  }
+
+  h4.title {
+    margin-left: 1.1em;
   }
 }
 
