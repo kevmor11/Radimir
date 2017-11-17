@@ -63,8 +63,9 @@ img.landscape {
 }
 
 img.logo {
+  display: block;
+  margin: 0 auto;
   margin-top: 2.4%;
-  margin-left: 6.5%;
   width: 13%;
 }
 
@@ -109,15 +110,18 @@ a.not-cover {
 }
 
 .social-icons {
+  display: inline;
+  margin: 0 auto;
   margin: 0 .2em;
 }
 
 header.header {
+  display: block;
   opacity: 0;
-  left: 42.4%;
   margin: 0 auto;
+  margin-top: 1em;
   overflow: hidden;
-  position: absolute;
+  width: 100%;
 }
 
 .rvd {
@@ -136,10 +140,20 @@ header.header {
   text-decoration: inherit;
 }
 
-.social-header {
-  background-color: white;
-  width: 100%;
-  z-index: 9998;
+img#prev {
+  cursor: pointer;
+  position: absolute;
+  top: 52.5%;
+  left: 1.5%;
+  width: 2.5%;
+}
+
+img#next {
+  cursor: pointer;
+  position: absolute;
+  top: 52.5%;
+  right: 1.5%;
+  width: 2.5%;
 }
 
 @font-face {
@@ -168,7 +182,6 @@ header.header {
   }
 
   img.logo {
-    margin-left: 23%;
     margin-top: 5%;
     width: 32%;
   }
@@ -213,7 +226,7 @@ header.header {
 }
 
 /* iPhone 6 landscape */
-@media (min-device-width: 320px) and (orientation: landscape) {
+@media (min-device-width: 667px) and (orientation: landscape) {
   .social-icons {
     width: 1.6em;
   }
@@ -223,7 +236,6 @@ header.header {
   }
 
   img.logo {
-    margin-left: 15.9%;
     margin-top: 3%;
     width: 23%;
   }
@@ -249,7 +261,6 @@ header.header {
   }
 
   img.logo {
-    margin-left: 21.5%;
     margin-top: 5.5%;
   }
 
@@ -290,7 +301,7 @@ header.header {
   }
 
   body.home {
-    margin: 20px 44px 0 44px;
+    margin: 0px 44px 0 44px;
   }
 
   div.album-cover {
@@ -329,10 +340,13 @@ header.header {
 
 /* 15" Macbook Pro */
 @media (min-width:1440px) {
+  div.container {
+    margin-top: 1.6em;
+  }
+
   img.logo {
-    margin-top: 2.7%;
-    margin-left: 9.1%;
-    width: 13%;
+    margin-top: 1.5%;
+    width: 8.5%;
   }
 
   div.album-cover {
@@ -350,6 +364,14 @@ header.header {
 
   h4.title {
     font-size: 1.3em;
+  }
+
+  div.social-header {
+    margin-left: 40.4%;
+  }
+
+  .social-icons {
+    width: 1.4em;
   }
 }
 

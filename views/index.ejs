@@ -4,12 +4,18 @@
     <% include ../partials/head %>
   </head>
   <body class="home" oncontextmenu="return false">
+    <!-- TODO load a cropped version of the gif for the portrait mobile viewers -->
+    <!-- crop gif to other sizes with https://ezgif.com/crop -->
     <div class="preload">
       <img class="pre-gif" src="/images/preload.gif">
     </div>
     <% include ../partials/header %>
     <!-- TODO see if I can get gif to always start at the beginning now matter if the page is regular or hard refreshed -->
+      <!-- https://forum.webflow.com/t/reload-gif-on-refresh/3458 -->
     <!-- TODO see if I can reduce gap between when the opacity fadeIn starts and when the fadeOut begins -->
+    <!-- TODO only load show page worth of albums at a time -->
+      <!-- preload the next page of albums so there is no visual load time issues -->
+      <!--ITS A BACKEND PROBLEM solve in index.js file by only sending 6 albums at a time -->
     <script>
       function transition(element) {
         $(element).css('transition', 'opacity 0.45s ease-in').css('opacity', 1);
@@ -32,7 +38,7 @@
         });
       </script>
     <% }); %>
-    <div class="container" class"z-index: 9999">
+    <div class="container">
       <% albums.forEach((album, i) => { %>
         <% if(album.cover) { %>
           <% covers.forEach((cover) => { %>
@@ -49,8 +55,8 @@
                     <a class="not-cover" href="/uploads/<%= album.id %>/<%= image.file_name %>" data-sub-html="<h3><%= image.title %></h3><h4><%= image.description %></h4>">
                       <img src="/uploads/<%= album.id %>/<%= image.file_name %>" alt="">
                     </a>
-                  <% }  %>
-                <% })%>
+                  <% } %>
+                <% }) %>
               </div>
             <% } %>
           <% }); %>
@@ -62,9 +68,11 @@
             } else {
               $('.cover-image-<%= i %>').addClass('portrait');
             }
-          })
+          });
         </script>
       <% }); %>
+      <img id="prev" src="/images/chevron-left2.svg">
+      <img id="next" src="/images/chevron-right4.svg">
     </div>
     <script>
       function hover(element) {
@@ -91,6 +99,58 @@
       leave('email');
       leave('twitter');
       leave('soundcloud');
+
+      $('#prev').click(() => {
+        alert("Hello");
+      });
+
+      $('#next').click(() => {
+        const pageSize = 6,
+              currentPage = 1,
+              end = currentPage * pageSize,
+              start = (end - pageSize)+1;
+        console.log(pageSize);
+        console.log("current Page",currentPage);
+        console.log("end",end);
+        console.log("start",start);
+        var data = {
+          t: start
+        };
+
+        $.ajax({
+          url: "/",
+          method:"GET",
+          dataType:'html',
+          data: { start: end },
+          success: (result) => {
+            $('html').html(result);
+
+            // Figure out why albums aren't resizing
+            // (() => {
+            //   albums.forEach((album, i) => {
+            //     console.log("Width", $(`.cover-image-${i}`).width());
+            //     if($(`.cover-image-${i}`).width() > $(`.cover-image-${i}`).height()) {
+            //       $(`.cover-image-${i}`).addClass('landscape');
+            //     } else {
+            //       $(`.cover-image-${i}`).addClass('portrait');
+            //     }
+            //   });
+            // });
+            albums.forEach((album, i) => {
+              $(document).ready(() => {
+                $(`#lightgallery-${i}`).lightGallery({
+                  controls: isTouch ? false : true,
+                  download: false,
+                  share: false
+                });
+              });
+            });
+          },
+          error: (error) => {
+            console.log(error);
+          }
+        });
+      });
     </script>
   </body>
 </html>
